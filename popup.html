@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Water Reminder</title>
+  <!-- Google Fonts for Roboto font -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <!-- External stylesheet link -->
+  <link rel="stylesheet" href="styles.css">
+  <!-- External JavaScript file for popup functionality -->
+  <script src="popup.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <!-- Main section for setting daily water goal -->
+    <div class="rectangle">
+      <header>
+        <!-- Header with an image icon and title -->
+        <img src="icon128.png" alt="Ducky" class="header-icon">
+        <h2>Water Reminder</h2>
+      </header>
+      <section class="goal-section">
+        <!-- Input field and button to set daily goal -->
+        <label for="goal">Daily goal (cups):</label>
+        <input type="number" id="goal" min="1" max="30">
+        <button id="setGoal">Set Goal</button>
+        <!-- Display the current goal -->
+        <p id="progress">Current goal: 8 cups.</p>
+      </section>
+    </div>
+
+    <!-- Section for tracking cups of water drunk -->
+    <div class="rectangle">
+      <section class="cups-section">
+        <h3>Cups Drunk Today</h3>
+        <!-- Display progress of cups drunk -->
+        <div id="cupProgress" class="cup-progress"></div>
+        <!-- Controls for adding or removing cups -->
+        <div class="cup-controls">
+          <button id="addCup">Add Cup</button>
+          <button id="removeCup">Remove Cup</button>
+        </div>
+        <!-- Display number of cups drunk -->
+        <p>Cups Drunk: <span id="cupsToday">0</span></p>
+      </section>
+    </div>
+
+    <!-- Settings section for reminder interval and notifications -->
+    <div class="rectangle">
+      <h3>Settings</h3>
+      <section class="reminder-section">
+        <!-- Input field and button for setting reminder interval -->
+        <label for="interval">Reminder interval (min):</label>
+        <input type="number" id="interval" min="1">
+        <button id="setInterval">Set Interval</button>
+        <!-- Display current status of reminder interval -->
+        <p id="status">No interval set.</p>
+      </section>
+      <section class="notification-section">
+        <!-- Checkbox for muting notifications -->
+        <input type="checkbox" id="mute-notifications">
+        <label for="mute-notifications">Mute notifications</label>
+      </section>
+      <footer>
+        <!-- Footer with reminder to stay hydrated -->
+        <p>💧 Stay hydrated, stay healthy! 💧</p>
+      </footer>
+    </div>
+  </div>
+</body>
+</html>

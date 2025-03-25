@@ -1,0 +1,20 @@
+{
+    "manifest_version": 3,
+    "name": "Water Reminder",
+    "version": "1.0",
+    "description": "Reminds you to drink water!",
+    "permissions": ["notifications", "alarms", "storage"],
+    "background": {
+      // Background script for handling events such as alarms
+      "service_worker": "background.js"
+    },
+    "action": {
+      // Configuration for the extension's action (icon and popup)
+      "default_icon": {
+        "16": "icon16.png",
+        "48": "icon48.png",
+        "128": "icon128.png"
+      },
+      "default_popup": "popup.html"
+    }
+  }
