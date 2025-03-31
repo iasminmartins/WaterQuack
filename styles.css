@@ -128,24 +128,29 @@ body {
     padding: 10px 0;
     display: flex;
     flex-wrap: wrap; /* Allows cups to move to new rows */
-    justify-content: center;
-    gap: 8px;
+    justify-content: center; /* Center cups horizontally */
+    gap: 8px; /* Space between cups */
+  }
+
+  .row-break {
+    flex-basis: 100%; /* Force a new row */
+    height: 0; /* No visible height */
   }
 
   .cup {
-    width: 20px;
+    width: 20px; /* Adjusted size for better alignment */
     height: 40px;
-    background: #e0f7fa;
-    border: 2px solid #4fc3f7;
+    background: #e0f7fa; /* Light blue for empty cups */
+    border: 2px solid #4fc3f7; /* Blue border */
     border-radius: 3px;
   }
 
   .cup.full {
-    background: #4fc3f7;
+    background: #4fc3f7; /* Blue for full cups */
   }
 
   .cup.empty {
-    background: #e0f7fa;
+    background: #e0f7fa; /* Light blue for empty cups */
   }
 
   .extra {

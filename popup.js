@@ -22,33 +22,42 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
+  // Validate and sanitize numeric input
+  function validateNumberInput(value, min, max) {
+    const number = parseInt(value, 10);
+    if (isNaN(number) || number < min || number > max) {
+      return null; // Invalid input
+    }
+    return number;
+  }
+
   // Handle setting reminder interval
   setIntervalButton.addEventListener("click", () => {
-    const interval = parseInt(document.getElementById("interval").value, 10);
-    if (interval > 0) {
+    const interval = validateNumberInput(document.getElementById("interval").value, 1, 1440);
+    if (interval !== null) {
       chrome.storage.sync.set({ interval }, () => {
         document.getElementById("status").textContent =
-          `Reminder set for every ${interval} minutes.`;
+          `Reminder set for every ${interval} minute(s).`;
         chrome.runtime.sendMessage({ action: "updateReminder", interval });
       });
     } else {
       document.getElementById("status").textContent =
-        "Please enter a valid number.";
+        "Please enter a valid number between 1 and 1440.";
     }
   });
 
   // Handle setting daily goal
   setGoalButton.addEventListener("click", () => {
-    const goal = parseInt(document.getElementById("goal").value, 10);
-    if (goal > 0 && goal <= 30) {
+    const goal = validateNumberInput(document.getElementById("goal").value, 1, 30);
+    if (goal !== null) {
       chrome.storage.sync.set(
-        { dailyGoal: goal, goalAchievedOnce: false }, // Reseta o controle
+        { dailyGoal: goal, goalAchievedOnce: false },
         () => {
           updateProgress();
         },
       );
     } else {
-      alert("The daily goal must be between 1 and 30 cups.");
+      alert("The daily goal must be a valid number between 1 and 30 cups.");
     }
   });
 
@@ -59,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const cups = data.dailyCups || 0;
 
       // Atualizar o progresso visual
-      progressDiv.textContent = `Current goal: ${goal} cups.`;
+      progressDiv.textContent = `Current goal: ${goal} cup(s).`;
       cupsTodaySpan.textContent = cups;
 
       renderProgress(cups, goal);
@@ -112,6 +121,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const cupProgress = document.getElementById("cupProgress");
     cupProgress.innerHTML = "";
 
+    const cupsPerRow = Math.ceil(Math.sqrt(dailyGoal)); // Calculate cups per row dynamically
     for (let i = 0; i < dailyGoal; i++) {
       const cup = document.createElement("div");
       cup.classList.add("cup");
@@ -121,6 +131,13 @@ document.addEventListener("DOMContentLoaded", () => {
         cup.classList.add("empty");
       }
       cupProgress.appendChild(cup);
+
+      // Add a row break after every `cupsPerRow` cups
+      if ((i + 1) % cupsPerRow === 0) {
+        const rowBreak = document.createElement("div");
+        rowBreak.classList.add("row-break");
+        cupProgress.appendChild(rowBreak);
+      }
     }
 
     if (dailyCups > dailyGoal) {
@@ -145,10 +162,24 @@ document.addEventListener("DOMContentLoaded", () => {
     muteCheckbox.checked = !!data.notificationsMuted;
   });
 
-  // Show notification if not muted
+  // Disable/enable notifications
+  document
+    .getElementById("disable-notifications")
+    .addEventListener("change", (event) => {
+      const disabled = event.target.checked;
+      chrome.storage.sync.set({ notificationsDisabled: disabled });
+    });
+
+  // Initialize disable notifications state
+  chrome.storage.sync.get("notificationsDisabled", (data) => {
+    const disableCheckbox = document.getElementById("disable-notifications");
+    disableCheckbox.checked = !!data.notificationsDisabled;
+  });
+
+  // Show notification if not muted or disabled
   function showNotification(title, message) {
-    chrome.storage.sync.get("notificationsMuted", (data) => {
-      if (!data.notificationsMuted) {
+    chrome.storage.sync.get(["notificationsMuted", "notificationsDisabled"], (data) => {
+      if (!data.notificationsMuted && !data.notificationsDisabled) {
         chrome.notifications.create({
           type: "basic",
           iconUrl: "icon48.png",

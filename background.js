@@ -10,16 +10,19 @@ const motivationalMessages = [
 
   // Create a notification with title and message
   function createNotification(title, message) {
-    chrome.storage.sync.get("notificationsMuted", (data) => {
+    chrome.storage.sync.get(["notificationsMuted", "notificationsDisabled"], (data) => {
       const isMuted = !!data.notificationsMuted;
-      chrome.notifications.create({
-        type: "basic",
-        iconUrl: "icon48.png",
-        title,
-        message,
-        silent: isMuted,
-        priority: 2,
-      });
+      const isDisabled = !!data.notificationsDisabled;
+      if (!isDisabled) {
+        chrome.notifications.create({
+          type: "basic",
+          iconUrl: "icon48.png",
+          title,
+          message,
+          silent: isMuted,
+          priority: 2,
+        });
+      }
     });
   }
 
@@ -56,19 +59,23 @@ const motivationalMessages = [
     });
   }
 
-  // Handle messages from popup.js
+  // Validate incoming messages
   chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === "updateReminder") {
       const interval = parseFloat(request.interval);
-      if (!isNaN(interval) && interval > 0) {
+      if (!isNaN(interval) && interval > 0 && interval <= 1440) {
         startReminder(interval);
         sendResponse({ status: "success" });
       } else {
         sendResponse({ status: "error", message: "Invalid interval." });
       }
     } else if (request.action === "goalAchieved") {
-      createNotification("Goal Achieved!", request.message);
-      sendResponse({ status: "success" });
+      if (typeof request.message === "string" && request.message.length <= 100) {
+        createNotification("Goal Achieved!", request.message);
+        sendResponse({ status: "success" });
+      } else {
+        sendResponse({ status: "error", message: "Invalid message." });
+      }
     } else {
       sendResponse({ status: "error", message: "Unknown action." });
     }
