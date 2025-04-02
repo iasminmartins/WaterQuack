@@ -91,7 +91,7 @@ const motivationalMessages = [
     });
     scheduleDailyReset();
     createNotification(
-      "Welcome to Water Reminder!",
+      "Welcome to WaterQuack!",
       "Set your daily goal and stay hydrated! 🥤",
     );
   });

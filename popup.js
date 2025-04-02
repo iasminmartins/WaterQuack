@@ -22,6 +22,13 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
+  // Initialize default interval if not set
+  chrome.storage.sync.get("interval", (data) => {
+    if (data.interval === undefined) {
+      chrome.storage.sync.set({ interval: 30 }); // Default to 30 minutes
+    }
+  });
+
   // Validate and sanitize numeric input
   function validateNumberInput(value, min, max) {
     const number = parseInt(value, 10);
@@ -67,9 +74,11 @@ document.addEventListener("DOMContentLoaded", () => {
       const goal = data.dailyGoal || 8;
       const cups = data.dailyCups || 0;
 
-      // Atualizar o progresso visual
+      // Update the title with the number of cups drunk
+      document.getElementById("cupsToday").textContent = cups;
+
+      // Update the progress display
       progressDiv.textContent = `Current goal: ${goal} cup(s).`;
-      cupsTodaySpan.textContent = cups;
 
       renderProgress(cups, goal);
     });
@@ -126,9 +135,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const cup = document.createElement("div");
       cup.classList.add("cup");
       if (i < dailyCups) {
-        cup.classList.add("full");
+        cup.classList.add("full"); // Use full cup image
       } else {
-        cup.classList.add("empty");
+        cup.classList.add("empty"); // Use empty cup image
       }
       cupProgress.appendChild(cup);
 

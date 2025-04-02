@@ -1,7 +1,8 @@
 body {
     font-family: 'Arial', sans-serif;
-    background: linear-gradient(to bottom, #a2d9ff, #eafcff);
-    color: #333;
+    font-weight: 600;
+    background: #ffffff;
+    color: #0066cc;
     margin: 0;
     padding: 0;
     display: flex;
@@ -11,8 +12,8 @@ body {
   }
 
   .rectangle {
-    background: #c7f2ff;
-    border: 2px solid #0066cc;
+    background: #76f7fc;
+    border: 3.5px solid #0066cc;
     border-radius: 8px;
     padding: 15px;
     margin-bottom: 20px;
@@ -23,21 +24,22 @@ body {
     width: 100%;
     padding: 8px;
     margin: 10px 0;
-    border: 1px solid #ccc;
+    border: 1px solid #0066cc;
     border-radius: 4px;
     box-sizing: border-box;
     font-size: 16px;
   }
 
   .container {
-    background: #c7f2ff;
+    background: url('background.png') no-repeat center center fixed;
+    background-size: cover;
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
     width: 90%;
     max-width: 400px;
     text-align: center;
-    min-height: 100%;
+    min-height: 100vh; /* Ensure it covers the full viewport height */
     overflow-y: auto;
   }
 
@@ -45,8 +47,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 20px;
-    border-bottom: 2px solid #0066cc;
+    margin-bottom: 10px; 
+    border-bottom: 2.5px solid #0066cc;
   }
 
   .header-icon {
@@ -56,13 +58,18 @@ body {
   }
 
   h2 {
-    font-size: 1.5em;
+    font-size: 2em;
     margin: 0;
     color: #0066cc;
+    font-weight: 800;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   }
 
   h3 {
     color: #0066cc;
+    font-size: 1.3em;
+    font-weight: 800;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   }
 
   .goal-section,
@@ -70,6 +77,31 @@ body {
   .reminder-section,
   .notification-section {
     margin-bottom: 20px;
+  }
+
+  .goal-section,
+  .reminder-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px; /* Uniform spacing between elements */
+  }
+
+  .goal-section label,
+  .goal-section input,
+  .goal-section button,
+  .reminder-section label,
+  .reminder-section input,
+  .reminder-section button {
+    flex: 1; /* Ensure equal width for all elements */
+    text-align: center; /* Center-align text for better appearance */
+  }
+
+  .goal-section input,
+  .reminder-section input {
+    max-width: 100%; /* Prevent overflow */
+    padding: 6px;
+    font-size: 14px;
   }
 
   .notification-section {
@@ -91,19 +123,22 @@ body {
     font-size: 1em;
     line-height: 16px;
     margin: 0;
+    color: #0066cc; /* Ensure notification labels are also blue */
   }
 
   label {
-    font-weight: bold;
+    font-weight: 800;
+    font-size: 1em;
     display: block;
     margin-bottom: 5px;
+    color: #0066cc; /* Change text color to blue */
   }
 
   input[type="number"] {
     width: 100%;
-    padding: 8px;
+    padding: 6px;
     margin-bottom: 10px;
-    border: 1px solid #ccc;
+    border: 2px solid #0066cc;
     border-radius: 5px;
   }
 
@@ -117,6 +152,8 @@ body {
     font-weight: bold;
     transition: background 0.3s;
     margin: 3px;
+    width: 100%; /* Ensure buttons have the same width */
+    max-width: 120px; /* Optional: Limit button width */
   }
 
   button:hover {
@@ -138,19 +175,19 @@ body {
   }
 
   .cup {
-    width: 20px; /* Adjusted size for better alignment */
-    height: 40px;
-    background: #e0f7fa; /* Light blue for empty cups */
-    border: 2px solid #4fc3f7; /* Blue border */
-    border-radius: 3px;
+    width: 40px; /* Ajuste o tamanho conforme necessário */
+    height: 60px;
+    background-size: contain; /* Garante que a imagem se ajuste ao tamanho do elemento */
+    background-repeat: no-repeat;
+    background-position: center; /* Centraliza a imagem dentro do elemento */
   }
 
   .cup.full {
-    background: #4fc3f7; /* Blue for full cups */
+    background-image: url('full-cup.png'); /* Path to the full cup image */
   }
 
   .cup.empty {
-    background: #e0f7fa; /* Light blue for empty cups */
+    background-image: url('empty-cup.png'); /* Path to the empty cup image */
   }
 
   .extra {
@@ -167,7 +204,7 @@ body {
 
   footer {
     font-size: 0.85em;
-    color: #666;
+    color: #0066cc;
     margin-top: 20px;
   }
 
