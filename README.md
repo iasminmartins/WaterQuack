@@ -1,9 +1,9 @@
-# Water Reminder
+# WaterQuack
 #### Video Demo: https://youtu.be/wpIM-89kmOI
 #### Description:
-Water Reminder is a Chrome extension designed to help users stay hydrated throughout the day. By setting personalized hydration goals and reminder intervals, this extension promotes healthier habits in a simple, engaging, and intuitive way.
+WaterQuack is a Chrome extension designed to help users stay hydrated throughout the day. By setting personalized hydration goals and reminder intervals, this extension promotes healthier habits in a simple, engaging, and intuitive way.
 
-With features like daily progress tracking, motivational notifications, and the ability to mute reminders, Water Reminder is your perfect companion for maintaining optimal hydration. Whether you’re working, studying, or simply going about your day, this extension ensures you never forget to take a sip!
+With features like daily progress tracking, motivational notifications, and the ability to mute reminders, WaterQuack is your perfect companion for maintaining optimal hydration. Whether you’re working, studying, or simply going about your day, this extension ensures you never forget to take a sip!
 
 ---
 
@@ -92,9 +92,10 @@ This script runs in the background to handle critical functionalities:
 ---
 
 ### Conclusion:
-Water Reminder is a thoughtfully designed extension aimed at promoting better hydration habits. Its customizable features, visually appealing interface, and motivational system make it a valuable tool for health-conscious users. By leveraging Chrome's API capabilities, it delivers a seamless and effective user experience. We hope this extension inspires you to stay hydrated and healthy every day!
+WaterQuack is a thoughtfully designed extension aimed at promoting better hydration habits. Its customizable features, visually appealing interface, and motivational system make it a valuable tool for health-conscious users. By leveraging Chrome's API capabilities, it delivers a seamless and effective user experience. We hope this extension inspires you to stay hydrated and healthy every day!
 
 ---
 
 ### Credits:
 Developed by Iasmin Martins Cintra. Icons sourced and designed by ChatGPT, with background color modifications made by the developer.
+
