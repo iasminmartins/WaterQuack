@@ -14,10 +14,10 @@ body {
   .rectangle {
     background: #76f7fc;
     border: 3.5px solid #0066cc;
-    border-radius: 8px;
+    border-radius: 10px;
     padding: 15px;
     margin-bottom: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
 
   input {
@@ -33,7 +33,7 @@ body {
   .container {
     background: url('background.png') no-repeat center center fixed;
     background-size: cover;
-    border-radius: 12px;
+    border-radius: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
     width: 90%;
@@ -47,13 +47,14 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 10px; 
+    margin-bottom: 20px;
+    padding-bottom: 5px; 
     border-bottom: 2.5px solid #0066cc;
   }
 
   .header-icon {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     margin-right: 10px;
   }
 
@@ -69,11 +70,10 @@ body {
     color: #0066cc;
     font-size: 1.3em;
     font-weight: 800;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
   }
 
   .goal-section,
-  .cups-section,
   .reminder-section,
   .notification-section {
     margin-bottom: 20px;
@@ -123,7 +123,7 @@ body {
     font-size: 1em;
     line-height: 16px;
     margin: 0;
-    color: #0066cc; /* Ensure notification labels are also blue */
+    color: #0066cc; 
   }
 
   label {
@@ -131,14 +131,14 @@ body {
     font-size: 1em;
     display: block;
     margin-bottom: 5px;
-    color: #0066cc; /* Change text color to blue */
+    color: #0066cc; 
   }
 
   input[type="number"] {
     width: 100%;
     padding: 6px;
     margin-bottom: 10px;
-    border: 2px solid #0066cc;
+    border: 2.3px solid #0066cc;
     border-radius: 5px;
   }
 
@@ -151,9 +151,9 @@ body {
     cursor: pointer;
     font-weight: bold;
     transition: background 0.3s;
-    margin: 3px;
-    width: 100%; /* Ensure buttons have the same width */
-    max-width: 120px; /* Optional: Limit button width */
+    margin: 5px 0; 
+    width: 100%; 
+    max-width: 120px; 
   }
 
   button:hover {
@@ -167,6 +167,7 @@ body {
     flex-wrap: wrap; /* Allows cups to move to new rows */
     justify-content: center; /* Center cups horizontally */
     gap: 8px; /* Space between cups */
+    margin-bottom: 15px; 
   }
 
   .row-break {
@@ -175,11 +176,11 @@ body {
   }
 
   .cup {
-    width: 40px; /* Ajuste o tamanho conforme necessário */
+    width: 40px; 
     height: 60px;
-    background-size: contain; /* Garante que a imagem se ajuste ao tamanho do elemento */
+    background-size: contain;
     background-repeat: no-repeat;
-    background-position: center; /* Centraliza a imagem dentro do elemento */
+    background-position: center;
   }
 
   .cup.full {
@@ -197,13 +198,14 @@ body {
   }
 
   .cup-controls {
-    display: flex; /* Ensure buttons are side by side */
-    justify-content: center; /* Center buttons */
+    display: flex; 
+    justify-content: center; 
     gap: 10px;
   }
 
   footer {
     font-size: 0.85em;
+    font-weight: bold;
     color: #0066cc;
     margin-top: 20px;
   }

@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (interval !== null) {
       chrome.storage.sync.set({ interval }, () => {
         document.getElementById("status").textContent =
-          `Reminder set for every ${interval} minute(s).`;
+          `Current interval: ${interval} minute(s).`;
         chrome.runtime.sendMessage({ action: "updateReminder", interval });
       });
     } else {
