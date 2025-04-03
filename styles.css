@@ -150,14 +150,16 @@ body {
     padding: 10px 15px;
     cursor: pointer;
     font-weight: bold;
-    transition: background 0.3s;
+    transition: background 0.3s, box-shadow 0.3s;
     margin: 5px 0; 
     width: 100%; 
     max-width: 120px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* Add shadow */
   }
 
   button:hover {
     background: #ffae00;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1); /* Enhance shadow on hover */
   }
 
   .cup-progress {
@@ -201,19 +203,6 @@ body {
     display: flex; 
     justify-content: center; 
     gap: 10px;
-  }
-
-  .settings-icon {
-    background: none;
-    border: none;
-    cursor: pointer;
-    margin-left: 10px;
-    padding: 0;
-  }
-
-  .settings-icon img {
-    width: 24px;
-    height: 24px;
   }
 
   footer {
