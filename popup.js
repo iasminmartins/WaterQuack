@@ -48,8 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
         chrome.runtime.sendMessage({ action: "updateReminder", interval });
       });
     } else {
-      document.getElementById("status").textContent =
-        "Please enter a valid number between 1 and 1440.";
+      alert("The reminder interval must be a valid number between 1 and 1440 minutes.");
     }
   });
 
@@ -104,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
           if (dailyCups >= dailyGoal && !goalAchievedOnce) {
             chrome.runtime.sendMessage({
               action: "goalAchieved",
-              message: `🎉 Congratulations! You reached your goal of ${dailyGoal} cups!`,
+              message: `Congratulations! You reached your goal of ${dailyGoal} cups!`,
             });
             chrome.storage.sync.set({ goalAchievedOnce: true });
           }
