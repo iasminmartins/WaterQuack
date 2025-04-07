@@ -130,16 +130,17 @@ body {
     font-weight: 800;
     font-size: 1em;
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 1px;
     color: #0066cc; 
   }
 
   input[type="number"] {
-    width: 100%;
+    width: 80%; 
     padding: 6px;
     margin-bottom: 10px;
     border: 2.3px solid #0066cc;
     border-radius: 5px;
+    font-size: 14px;
   }
 
   button {
@@ -155,6 +156,7 @@ body {
     width: 100%; 
     max-width: 120px; 
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* Add shadow */
+    font-size: 14px;
   }
 
   button:hover {
