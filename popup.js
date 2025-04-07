@@ -103,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
           if (dailyCups >= dailyGoal && !goalAchievedOnce) {
             chrome.runtime.sendMessage({
               action: "goalAchieved",
-              message: `Congratulations! You've reached your goal of ${dailyGoal} cups!`,
+              message: `You've reached your goal of ${dailyGoal} cups. Congratu-ducking-lations! 💧`,
             });
             chrome.storage.sync.set({ goalAchievedOnce: true });
           }

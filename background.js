@@ -2,10 +2,26 @@
 const motivationalMessages = [
     "Every drop counts! Stay hydrated.",
     "You're on the right track! Keep drinking water.",
+    "Don't be a dry duck. Take a sip!",
+    "If ducks could talk like me, they'd say 'Drink up that water, human!'",
     "Hydration is key to energy. Don't stop now!",
     "Great job! Your body thanks you for the water.",
     "Water is life. Keep it up!",
-    "You're doing amazing, sweetie!",
+    "Water you waiting for? Take a sip!",
+    "Another sip? Quacktastic idea!",
+    "Waddle you do without water? Drink up!",
+    "You're doing amazing, sweetie! Have a sip.",
+    "One small sip for you, one giant gulp for your health!",
+    "This message was brought to you by a very concerned duck. DRINK WATER.",
+    "Don't make me quack twice. Go hydrate!",
+    "If you were a duck, you'd be floating better with more water in you.",
+    "WaterQuack sees you… and your dry lips. Fix that.",
+    "Be like a duck: calm on the surface, hydrated underneath.",
+    "Duck it — take a sip.",
+    "Drink water. Stay quacksy.",
+    "You're not you when you're thirsty. Have a sip, superstar.",
+    "Hydration is no yolk. Drink up, duckling.",
+    "Sip happens. Just wing it — and drink some water.",
   ];
 
   // Create a notification with title and message
@@ -41,7 +57,7 @@ const motivationalMessages = [
         motivationalMessages[
           Math.floor(Math.random() * motivationalMessages.length)
         ];
-      createNotification("Time to drink water!", randomMessage);
+      createNotification("Quack! Time to drink water!", randomMessage);
     } else if (alarm.name === "resetDailyCups") {
       chrome.storage.sync.set({ dailyCups: 0, goalAchievedOnce: false });
     }
@@ -71,7 +87,7 @@ const motivationalMessages = [
       }
     } else if (request.action === "goalAchieved") {
       if (typeof request.message === "string" && request.message.length <= 100) {
-        createNotification("Goal Achieved!", request.message);
+        createNotification("Holy duck! Goal Achieved!", request.message);
         sendResponse({ status: "success" });
       } else {
         sendResponse({ status: "error", message: "Invalid message." });
@@ -92,7 +108,7 @@ const motivationalMessages = [
     scheduleDailyReset();
     createNotification(
       "Welcome to WaterQuack!",
-      "Set your daily goal and stay hydrated! 🥤",
+      "Set your daily goal and stay hydrated! 💧",
     );
   });
 
