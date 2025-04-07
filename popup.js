@@ -101,8 +101,8 @@ document.addEventListener("DOMContentLoaded", () => {
       ["dailyCups", "dailyGoal", "goalAchievedOnce"],
       (data) => {
         const dailyCups = (data.dailyCups || 0) + 1;
-        const dailyGoal = data.dailyGoal || 10;
-        const goalAchievedOnce = data.goalAchievedOnce || false;
+        const dailyGoal = data.dailyGoal || 10; // Default to 10 cups
+        let goalAchievedOnce = data.goalAchievedOnce || false;
 
         if (dailyCups > 30) {
           alert(
@@ -111,16 +111,22 @@ document.addEventListener("DOMContentLoaded", () => {
           return;
         }
 
-        chrome.storage.sync.set({ dailyCups }, () => {
+        // Ensure goalAchievedOnce is reset if the goal is not reached yet
+        if (dailyCups < dailyGoal) {
+          goalAchievedOnce = false;
+        }
+
+        chrome.storage.sync.set({ dailyCups, goalAchievedOnce }, () => {
           if (dailyCups >= dailyGoal && !goalAchievedOnce) {
             playQuackSound(); // Play the sound when the goal is achieved
             chrome.runtime.sendMessage({
               action: "goalAchieved",
               message: `You've reached your goal of ${dailyGoal} cups. Congratu-ducking-lations! 💧`,
             });
-            chrome.storage.sync.set({ goalAchievedOnce: true });
+            chrome.storage.sync.set({ goalAchievedOnce: true }, updateProgress);
+          } else {
+            updateProgress();
           }
-          updateProgress();
         });
       },
     );
