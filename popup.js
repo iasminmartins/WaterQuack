@@ -85,9 +85,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Function to play the "quack.mp3" sound
   function playQuackSound() {
-    const audio = new Audio("quack.mp3");
-    audio.play().catch((error) => {
-      console.error("Failed to play sound:", error);
+    chrome.storage.sync.get("notificationsMuted", (data) => {
+      if (!data.notificationsMuted) {
+        const audio = new Audio("quack.mp3");
+        audio.play().catch((error) => {
+          console.error("Failed to play sound:", error);
+        });
+      }
     });
   }
 
