@@ -218,10 +218,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const intervalInput = document.getElementById("interval");
 
     if (goalInput) {
-      goalInput.placeholder = `Default goal: ${data.dailyGoal || 10} cups`;
+      goalInput.placeholder = `Current goal: ${data.dailyGoal || 10} cups`;
     }
     if (intervalInput) {
-      intervalInput.placeholder = `Default interval: ${data.interval || 30} minutes`;
+      intervalInput.placeholder = `Current interval: ${data.interval || 30} minutes`;
     }
   });
 
