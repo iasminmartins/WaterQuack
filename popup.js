@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Update progress display and notify when goal is reached
   function updateProgress() {
     chrome.storage.sync.get(["dailyGoal", "dailyCups"], (data) => {
-      const goal = data.dailyGoal || 8;
+      const goal = data.dailyGoal || 10;
       const cups = data.dailyCups || 0;
 
       // Update the title with the number of cups drunk
@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ["dailyCups", "dailyGoal", "goalAchievedOnce"],
       (data) => {
         const dailyCups = (data.dailyCups || 0) + 1;
-        const dailyGoal = data.dailyGoal || 8;
+        const dailyGoal = data.dailyGoal || 10;
         const goalAchievedOnce = data.goalAchievedOnce || false;
 
         if (dailyCups > 30) {
@@ -103,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
           if (dailyCups >= dailyGoal && !goalAchievedOnce) {
             chrome.runtime.sendMessage({
               action: "goalAchieved",
-              message: `Congratulations! You reached your goal of ${dailyGoal} cups!`,
+              message: `Congratulations! You've reached your goal of ${dailyGoal} cups!`,
             });
             chrome.storage.sync.set({ goalAchievedOnce: true });
           }

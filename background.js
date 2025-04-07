@@ -86,7 +86,7 @@ const motivationalMessages = [
     chrome.storage.sync.set({
       interval: 30,
       dailyCups: 0,
-      dailyGoal: 8,
+      dailyGoal: 10,
       notificationsMuted: false,
     });
     scheduleDailyReset();
