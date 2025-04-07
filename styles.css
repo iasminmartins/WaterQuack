@@ -20,14 +20,26 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
 
-  input {
-    width: 100%;
-    padding: 8px;
-    margin: 10px 0;
-    border: 1px solid #0066cc;
-    border-radius: 4px;
+  input, input[type="number"] {
+    width: 80%; 
+    padding: 8px; 
+    margin: 10px 0; 
+    border: 2.3px solid #0066cc; 
+    border-radius: 6px; 
+    font-size: 14px; 
     box-sizing: border-box;
-    font-size: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  input::placeholder {
+    font-size: 12px; /* Define o tamanho da fonte */
+    color: #999999; /* Define a cor do texto */
+    font-style: italic; /* Opcional: estilo itálico */
+  }
+
+  input:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 191, 255, 0.4);
   }
 
   .container {
@@ -102,6 +114,8 @@ body {
     max-width: 100%; /* Prevent overflow */
     padding: 6px;
     font-size: 14px;
+    color:#0066cc;
+    font-weight: bold;
   }
 
   .notification-section {
@@ -109,6 +123,8 @@ body {
     align-items: center;
     justify-content: center;
     gap: 8px;
+    margin-top: 34px;
+    margin-bottom: 30px;
   }
 
   .notification-section input[type="checkbox"] {
@@ -120,7 +136,7 @@ body {
 
   .notification-section label {
     white-space: nowrap;
-    font-size: 1em;
+    font-size: 1.1em;
     line-height: 16px;
     margin: 0;
     color: #0066cc; 
@@ -128,26 +144,17 @@ body {
 
   label {
     font-weight: 800;
-    font-size: 1em;
+    font-size: 1.1em;
     display: block;
-    margin-bottom: 1px;
+    margin-top: 12px;
     color: #0066cc; 
-  }
-
-  input[type="number"] {
-    width: 80%; 
-    padding: 6px;
-    margin-bottom: 10px;
-    border: 2.3px solid #0066cc;
-    border-radius: 5px;
-    font-size: 14px;
   }
 
   button {
     background: #ffd700;
     color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 6px;
     padding: 10px 15px;
     cursor: pointer;
     font-weight: bold;
@@ -157,6 +164,7 @@ body {
     max-width: 120px; 
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* Add shadow */
     font-size: 14px;
+    margin-bottom: 10px;
   }
 
   button:hover {
@@ -208,10 +216,11 @@ body {
   }
 
   footer {
-    font-size: 0.85em;
+    font-size: 0.9em;
     font-weight: bold;
     color: #0066cc;
-    margin-top: 20px;
+    margin-top: 40px;
+    margin-bottom: 5px;
   }
 
   footer p {

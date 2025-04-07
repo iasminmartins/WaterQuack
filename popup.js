@@ -236,10 +236,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const intervalInput = document.getElementById("interval");
 
     if (goalInput) {
-      goalInput.placeholder = `Current goal: ${data.dailyGoal || 10} cups`;
+      goalInput.placeholder = `Current goal: ${data.dailyGoal || 10} cup(s)`;
     }
     if (intervalInput) {
-      intervalInput.placeholder = `Current interval: ${data.interval || 30} minutes`;
+      intervalInput.placeholder = `Current interval: ${data.interval || 30} minute(s)`;
     }
   });
 
