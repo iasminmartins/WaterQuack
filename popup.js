@@ -83,6 +83,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Function to play the "quack.mp3" sound
+  function playQuackSound() {
+    const audio = new Audio("quack.mp3");
+    audio.play().catch((error) => {
+      console.error("Failed to play sound:", error);
+    });
+  }
+
   // Add a cup to the tally
   addCupButton.addEventListener("click", () => {
     chrome.storage.sync.get(
@@ -101,6 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         chrome.storage.sync.set({ dailyCups }, () => {
           if (dailyCups >= dailyGoal && !goalAchievedOnce) {
+            playQuackSound(); // Play the sound when the goal is achieved
             chrome.runtime.sendMessage({
               action: "goalAchieved",
               message: `You've reached your goal of ${dailyGoal} cups. Congratu-ducking-lations! 💧`,
