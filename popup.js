@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (interval !== null) {
       chrome.storage.sync.set({ interval }, () => {
         document.getElementById("status").textContent =
-          `Current interval: ${interval} minute(s).`;
+          `Current interval: ${interval} minute(s).`; // Update hidden status element
         chrome.runtime.sendMessage({ action: "updateReminder", interval });
       });
     } else {
@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Update the title with the number of cups drunk
       document.getElementById("cupsToday").textContent = cups;
 
-      // Update the progress display
+      // Update the hidden progress display
       progressDiv.textContent = `Current goal: ${goal} cup(s).`;
 
       renderProgress(cups, goal);
@@ -211,6 +211,19 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
+
+  // Initialize placeholders for goal and interval inputs
+  chrome.storage.sync.get(["dailyGoal", "interval"], (data) => {
+    const goalInput = document.getElementById("goal");
+    const intervalInput = document.getElementById("interval");
+
+    if (goalInput) {
+      goalInput.placeholder = `Default goal: ${data.dailyGoal || 10} cups`;
+    }
+    if (intervalInput) {
+      intervalInput.placeholder = `Default interval: ${data.interval || 30} minutes`;
+    }
+  });
 
   // Initial progress update
   updateProgress();

@@ -33,19 +33,19 @@
       <section class="goal-section">
         <label for="goal">⚙️ Set your daily water goal (in cups):</label>
         <div>
-          <input type="number" id="goal" min="1" max="30">
+          <input type="number" id="goal" min="1" max="30" placeholder="Default goal: 10 cups">
           <button id="setGoal">Set</button>
         </div>
       </section>
-      <p id="progress">Default goal: 10 cups.</p>
+      <p id="progress" style="display: none;"></p> <!-- Hidden element -->
       <section class="reminder-section">
         <label for="interval">⚙️ Set reminder interval (in minutes):</label>
         <div>
-          <input type="number" id="interval" min="1">
+          <input type="number" id="interval" min="1" placeholder="Default interval: 30 minutes">
           <button id="setInterval">Set</button>
         </div>
       </section>
-      <p id="status">Default interval: 30 minutes.</p>
+      <p id="status" style="display: none;"></p> <!-- Hidden element -->
       <section class="notification-section">
         <input type="checkbox" id="mute-notifications">
         <label for="mute-notifications">Mute notifications</label>
