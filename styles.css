@@ -82,9 +82,9 @@ body {
   .goal-section,
   .reminder-section {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px; /* Uniform spacing between elements */
+    flex-direction: column; /* Stack elements vertically */
+    align-items: stretch; /* Ensure full width alignment */
+    gap: 10px; /* Add spacing between elements */
   }
 
   .goal-section label,
