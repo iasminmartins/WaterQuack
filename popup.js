@@ -56,12 +56,24 @@ document.addEventListener("DOMContentLoaded", () => {
   setGoalButton.addEventListener("click", () => {
     const goal = validateNumberInput(document.getElementById("goal").value, 1, 30);
     if (goal !== null) {
-      chrome.storage.sync.set(
-        { dailyGoal: goal, goalAchievedOnce: false },
-        () => {
-          updateProgress();
-        },
-      );
+      chrome.storage.sync.get(["dailyCups"], (data) => {
+        const dailyCups = data.dailyCups || 0;
+
+        chrome.storage.sync.set(
+          { dailyGoal: goal, goalAchievedOnce: false },
+          () => {
+            if (dailyCups >= goal) {
+              playQuackSound(); // Play the sound when the goal is achieved
+              chrome.runtime.sendMessage({
+                action: "goalAchieved",
+                message: `You've reached your goal of ${goal} cups. Congratu-ducking-lations! 💧`,
+              });
+              chrome.storage.sync.set({ goalAchievedOnce: true });
+            }
+            updateProgress();
+          },
+        );
+      });
     } else {
       alert("The daily goal must be a valid number between 1 and 30 cups.");
     }
