@@ -20,6 +20,7 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     width: 300px; /* Set a fixed width */
     overflow: hidden; /* Prevent content overflow */
+    position: relative;
   }
 
   input, input[type="number"] {

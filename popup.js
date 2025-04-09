@@ -46,6 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("status").textContent =
           `Current interval: ${interval} minute(s).`; // Update hidden status element
         chrome.runtime.sendMessage({ action: "updateReminder", interval });
+        alert("Reminder interval set successfully!"); // Notify user
       });
     } else {
       alert("The reminder interval must be a valid number between 1 and 1440 minutes.");
@@ -71,6 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
               chrome.storage.sync.set({ goalAchievedOnce: true });
             }
             updateProgress();
+            alert("Daily goal set successfully!"); // Notify user
           },
         );
       });
