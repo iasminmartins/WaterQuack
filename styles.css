@@ -25,7 +25,7 @@ body {
     padding: 8px; 
     margin: 10px 0; 
     border: 2.3px solid #0066cc; 
-    border-radius: 6px; 
+    border-radius: 20px; 
     font-size: 14px; 
     box-sizing: border-box;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -75,6 +75,7 @@ body {
     margin: 0;
     color: #0066cc;
     font-weight: 800;
+    letter-spacing: 1px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   }
 
@@ -154,7 +155,7 @@ body {
     background: #ffd700;
     color: #fff;
     border: none;
-    border-radius: 6px;
+    border-radius: 20px;
     padding: 10px 15px;
     cursor: pointer;
     font-weight: bold;
