@@ -64,7 +64,7 @@ body {
     align-items: center;
     justify-content: center;
     margin-bottom: 20px;
-    padding-bottom: 5px; 
+    padding-bottom: 10px; 
     border-bottom: 2.5px solid #0066cc;
   }
 
@@ -83,13 +83,19 @@ body {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   }
 
-  h3 {
+  h3, h4 {
     color: #0066cc;
     font-size: 1.3em;
     font-weight: 800;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
   }
 
+  h4 {
+    margin-bottom: 20px;
+    margin-top: 10px;
+    padding-bottom: 15px; 
+    border-bottom: 2.5px solid #0066cc;
+  }
   .goal-section,
   .reminder-section,
   .notification-section {
@@ -128,8 +134,8 @@ body {
     flex-direction: column; /* Stack items vertically */
     align-items: center; /* Align items to the left */
     gap: 30px; /* Add spacing between toggle containers */
-    margin-top: 34px;
-    margin-bottom: 30px;
+    margin-top: 10px;
+    margin-bottom: 20px;
   }
 
   .notification-section input[type="checkbox"] {
@@ -380,4 +386,12 @@ body {
     border-style: solid;
     border-color: #ffd700 transparent transparent transparent; /* Match tooltip background */
     z-index: 10;
+  }
+
+  .settings-card {
+    background-color: #adfbff; /* Light baby blue background */
+    padding: 5px; /* Soft padding */
+    border-radius: 10px; /* Rounded corners */
+    margin-bottom: 20px; /* Spacing between cards */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
   }

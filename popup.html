@@ -29,47 +29,61 @@
 
     <!-- Section for settings -->
     <div class="rectangle">
-      <h3>Settings</h3>
-      <section class="goal-section">
-        <label for="goal">⚙️ Set your daily water goal (in cups):</label>
-        <div>
-          <input type="number" id="goal" min="1" max="30" placeholder="Default goal: 10 cups">
-          <button id="setGoal">Set</button>
-        </div>
-      </section>
-      <p id="progress" style="display: none;"></p> <!-- Hidden element -->
-      <section class="reminder-section">
-        <label for="interval">⚙️ Set reminder interval (in minutes):</label>
-        <div>
-          <input type="number" id="interval" min="1" placeholder="Default interval: 30 minutes">
-          <button id="setInterval">Set</button>
-        </div>
-      </section>
-      <p id="status" style="display: none;"></p> <!-- Hidden element -->
-      <section class="notification-section">
-        <div class="toggle-container">
-          <label class="toggle-switch">
-            <input type="checkbox" id="mute-notifications">
-            <span class="slider">
-              <span class="on-text">ON</span>
-              <span class="off-text">OFF</span>
-            </span>
-          </label>
-          <label for="mute-notifications">Mute notifications</label>
-          <span class="tooltip-icon" data-tooltip="You'll still receive notifications, but silently.">?</span>
-        </div>
-        <div class="toggle-container">
-          <label class="toggle-switch">
-            <input type="checkbox" id="disable-notifications">
-            <span class="slider">
-              <span class="on-text">ON</span>
-              <span class="off-text">OFF</span>
-            </span>
-          </label>
-          <label for="disable-notifications">Stop notifications</label>
-          <span class="tooltip-icon" data-tooltip="Turns off all notifications completely.">?</span>
-        </div>
-      </section>
+      <h4>Settings</h4>
+
+      <!-- Card for Daily Goal -->
+      <div class="settings-card">
+        <section class="goal-section">
+          <label for="goal">⚙️ Set your daily water goal (in cups):</label>
+          <div>
+            <input type="number" id="goal" min="1" max="30" placeholder="Default goal: 10 cups">
+            <button id="setGoal">Set</button>
+          </div>
+        </section>
+        <p id="progress" style="display: none;"></p> <!-- Hidden element -->
+      </div>
+
+      <!-- Card for Reminder Interval -->
+      <div class="settings-card">
+        <section class="reminder-section">
+          <label for="interval">⚙️ Set reminder interval (in minutes):</label>
+          <div>
+            <input type="number" id="interval" min="1" placeholder="Default interval: 30 minutes">
+            <button id="setInterval">Set</button>
+          </div>
+        </section>
+        <p id="status" style="display: none;"></p> <!-- Hidden element -->
+      </div>
+
+      <!-- Card for Notification Toggles -->
+      <div class="settings-card">
+        <section class="notification-section">
+          <label for="notification-settings">⚙️ Notification settings:</label>
+          <div class="toggle-container">
+            <label class="toggle-switch">
+              <input type="checkbox" id="mute-notifications">
+              <span class="slider">
+                <span class="on-text">ON</span>
+                <span class="off-text">OFF</span>
+              </span>
+            </label>
+            <label for="mute-notifications">Mute notifications</label>
+            <span class="tooltip-icon" data-tooltip="You'll still receive notifications, but silently.">?</span>
+          </div>
+          <div class="toggle-container">
+            <label class="toggle-switch">
+              <input type="checkbox" id="disable-notifications">
+              <span class="slider">
+                <span class="on-text">ON</span>
+                <span class="off-text">OFF</span>
+              </span>
+            </label>
+            <label for="disable-notifications">Stop notifications</label>
+            <span class="tooltip-icon" data-tooltip="Turns off all notifications completely.">?</span>
+          </div>
+        </section>
+      </div>
+
       <footer>
         <p>💧 Warning: Lack of hydration may cause dry humor! 💧</p>
       </footer>
