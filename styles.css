@@ -18,6 +18,8 @@ body {
     padding: 15px;
     margin-bottom: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 350px; /* Set a fixed width */
+    overflow: hidden; /* Prevent content overflow */
   }
 
   input, input[type="number"] {
@@ -121,9 +123,9 @@ body {
 
   .notification-section {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center align all items */
+    gap: 16px; /* Add spacing between toggle switches */
     margin-top: 34px;
     margin-bottom: 30px;
   }
@@ -136,11 +138,10 @@ body {
   }
 
   .notification-section label {
-    white-space: nowrap;
     font-size: 1.1em;
-    line-height: 16px;
+    line-height: 1.5; /* Ensure proper vertical alignment */
     margin: 0;
-    color: #0066cc; 
+    color: #0066cc;
   }
 
   label {
@@ -234,9 +235,11 @@ body {
 
   .toggle-container {
     display: flex;
-    align-items: center;
-    gap: 8px;
+    align-items: center; /* Vertically align toggle and label */
+    justify-content: center; /* Center align toggle and label */
+    gap: 10px; /* Add spacing between toggle and label */
     margin-bottom: 10px;
+    width: 100%; /* Ensure full width alignment */
   }
 
   .toggle-switch {
@@ -259,7 +262,7 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #ccc; /* Gray when off */
+    background-color: #0066cc; /* Blue when off */
     transition: 0.4s;
     border-radius: 24px;
     display: flex;
@@ -284,7 +287,7 @@ body {
   }
 
   input:checked + .slider {
-    background-color: #0066cc; /* Blue when on */
+    background-color: #ffd700; /* Yellow when on */
   }
 
   input:checked + .slider:before {
@@ -296,13 +299,19 @@ body {
     transition: opacity 0.4s;
   }
 
+  .slider .on-text,
+  .slider .off-text {
+    position: absolute;
+    transition: opacity 0.4s;
+  }
+
   .slider .on-text {
-    left: 8px;
+    left: 8px; /* Restore "ON" position */
     opacity: 0; /* Hidden by default */
   }
 
   .slider .off-text {
-    right: 8px;
+    right: 8px; /* Restore "OFF" position */
     opacity: 1; /* Visible by default */
   }
 
