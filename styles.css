@@ -34,9 +34,9 @@ body {
   }
 
   input::placeholder {
-    font-size: 12px; /* Define o tamanho da fonte */
-    color: #999999; /* Define a cor do texto */
-    font-style: italic; /* Opcional: estilo itálico */
+    font-size: 12px; 
+    color: #999999; 
+    font-style: italic; 
   }
 
   input:focus {
@@ -124,8 +124,8 @@ body {
   .notification-section {
     display: flex;
     flex-direction: column; /* Stack items vertically */
-    align-items: center; /* Center align all items */
-    gap: 16px; /* Add spacing between toggle switches */
+    align-items: center; /* Align items to the left */
+    gap: 30px; /* Add spacing between toggle containers */
     margin-top: 34px;
     margin-bottom: 30px;
   }
@@ -321,4 +321,63 @@ body {
 
   input:checked + .slider .off-text {
     opacity: 0; /* Hide "OFF" when active */
+  }
+
+  .tooltip {
+    font-size: 0.9em;
+    color: #666;
+    margin-top: 5px;
+    text-align: center;
+  }
+
+  .tooltip-icon {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    background-color: #0066cc;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 18px;
+    border-radius: 50%;
+    margin-left: 8px; /* Restore left margin for horizontal alignment */
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .tooltip-icon:hover {
+    transform: scale(1.1); /* Slightly enlarge the icon */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+  }
+
+  .tooltip-icon:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 125%; /* Position above the icon */
+    left: auto; /* Remove default centering */
+    right: 0; /* Align tooltip to the left of the container */
+    transform: translateX(-10%); /* Slightly shift left for better alignment */
+    background-color: #ffffff; /* Change tooltip background color */
+    color: #0066cc; /* Change tooltip text color */
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 0.7em;
+    font-weight: 800;
+    white-space: nowrap;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+  }
+
+  .tooltip-icon:hover::before {
+    content: "";
+    position: absolute;
+    bottom: 115%; /* Position the arrow */
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 6px;
+    border-style: solid;
+    border-color: #ffd700 transparent transparent transparent; /* Match tooltip background */
+    z-index: 10;
   }
