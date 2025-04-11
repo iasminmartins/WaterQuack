@@ -137,24 +137,25 @@ body {
   .notification-section {
     display: flex;
     flex-direction: column; /* Stack items vertically */
-    align-items: center; /* Align items to the left */
-    gap: 30px; /* Add spacing between toggle containers */
-    margin-top: 15px;
-    margin-bottom: 15px;
+    align-items: left; /* Align items to the left */
+    gap: 10px; /* Add spacing between toggle containers */
+    margin-bottom: 5px;
+    margin-left: 10px;
   }
-
-  .notification-section input[type="checkbox"] {
-    margin: 0;
-    padding: 0;
-    width: 16px;
-    height: 16px;
-  }
-
+ 
   .notification-section label {
-    line-height: 1.5; /* Ensure proper vertical alignment */
-    margin: 0;
     color: #0066cc;
-    font-size: 1.1em; /* Font size for "⚙️ Notification settings:" */
+    font-size: 1.1em;
+    text-align: left; /* Align label to the left */
+    display: block; /* Ensure it spans the full width */
+  }
+
+  .notification-section .toggle-container {
+    display: flex;
+    align-items: center; /* Vertically align toggle, label, and tooltip */
+    justify-content: flex-start; /* Align items to the left */
+    gap: 10px; /* Add spacing between toggle, label, and tooltip */  
+    width: 100%; /* Ensure full width alignment */
   }
 
   .notification-section .toggle-container label {
