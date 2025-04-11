@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Update progress display and notify when goal is reached
-  function updateProgress(dailyCups = null, dailyGoal = null, removedCupIndex = null) {
+  function updateProgress(dailyCups = null, dailyGoal = null, isCupAdded = false) {
     chrome.storage.sync.get(["dailyGoal", "dailyCups"], (data) => {
       const goal = dailyGoal || data.dailyGoal || 10;
       const cups = dailyCups !== null ? dailyCups : data.dailyCups || 0;
@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Update the hidden progress display
       progressDiv.textContent = `Current goal: ${goal} cup(s).`;
 
-      renderProgress(cups, goal);
+      renderProgress(cups, goal, isCupAdded);
     });
   }
 
@@ -137,9 +137,11 @@ document.addEventListener("DOMContentLoaded", () => {
               action: "goalAchieved",
               message: `You've reached your goal of ${dailyGoal} cups. Congratu-ducking-lations! 💧`,
             });
-            chrome.storage.sync.set({ goalAchievedOnce: true }, updateProgress);
+            chrome.storage.sync.set({ goalAchievedOnce: true }, () =>
+              updateProgress(dailyCups, dailyGoal, true),
+            );
           } else {
-            updateProgress();
+            updateProgress(dailyCups, dailyGoal, true);
           }
         });
       },
@@ -158,7 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Render the cup progress bar
-  function renderProgress(dailyCups, dailyGoal) {
+  function renderProgress(dailyCups, dailyGoal, isCupAdded = false) {
     const cupProgress = document.getElementById("cupProgress");
     cupProgress.innerHTML = "";
 
@@ -168,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
       cup.classList.add("cup");
       if (i < dailyCups) {
         cup.classList.add("full"); // Use full cup image
-        if (i === dailyCups - 1) {
+        if (isCupAdded && i === dailyCups - 1) {
           cup.classList.add("added"); // Apply fade-in animation to the newly added cup
           setTimeout(() => cup.classList.remove("added"), 500); // Remove animation class after it completes
         }
