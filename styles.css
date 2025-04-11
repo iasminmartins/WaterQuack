@@ -83,7 +83,7 @@ body {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   }
 
-  h3, h4 {
+  h3 {
     color: #0066cc;
     font-size: 1.3em;
     font-weight: 800;
@@ -92,10 +92,15 @@ body {
 
   h4 {
     margin-bottom: 20px;
+    font-size: 1.5em;
+    color: #0066cc;
+    font-weight: 800;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
     margin-top: 10px;
     padding-bottom: 15px; 
     border-bottom: 2.5px solid #0066cc;
   }
+
   .goal-section,
   .reminder-section,
   .notification-section {
@@ -134,8 +139,8 @@ body {
     flex-direction: column; /* Stack items vertically */
     align-items: center; /* Align items to the left */
     gap: 30px; /* Add spacing between toggle containers */
-    margin-top: 10px;
-    margin-bottom: 20px;
+    margin-top: 15px;
+    margin-bottom: 15px;
   }
 
   .notification-section input[type="checkbox"] {
@@ -149,13 +154,19 @@ body {
     line-height: 1.5; /* Ensure proper vertical alignment */
     margin: 0;
     color: #0066cc;
+    font-size: 1.1em; /* Font size for "⚙️ Notification settings:" */
+  }
+
+  .notification-section .toggle-container label {
+    font-size: 1em; /* Smaller font size for "Mute notifications" and "Stop notifications" */
   }
 
   label {
     font-weight: 800;
-    font-size: 1em;
+    font-size: 1.1em;
     display: block;
-    margin-top: 12px;
+    margin-top: 15px;
+    margin-bottom: 10px;
     color: #0066cc; 
   }
 
@@ -173,7 +184,8 @@ body {
     max-width: 120px; 
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* Add shadow */
     font-size: 14px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+    margin-top: 15px;
   }
 
   button:hover {
