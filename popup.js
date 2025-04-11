@@ -171,13 +171,13 @@ document.addEventListener("DOMContentLoaded", () => {
       if (i < dailyCups) {
         cup.classList.add("full"); // Use full cup image
         if (isCupAdded && i === dailyCups - 1) {
-          cup.classList.add("added"); // Apply fade-in animation to the newly added cup
+          cup.classList.add("added"); // Apply fade animation to the newly added cup
           setTimeout(() => cup.classList.remove("added"), 500); // Remove animation class after it completes
         }
       } else {
         cup.classList.add("empty"); // Use empty cup image
         if (isCupRemoved && i === dailyCups) {
-          cup.classList.add("removed"); // Apply fade-out animation to the removed cup
+          cup.classList.add("removed"); // Apply fade animation to the removed cup
           setTimeout(() => cup.classList.remove("removed"), 500); // Remove animation class after it completes
         }
       }

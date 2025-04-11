@@ -209,7 +209,7 @@ body {
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1); /* Enhance shadow on hover */
   }
 
-  @keyframes fadeIn {
+  @keyframes fade {
     from {
       opacity: 0;
       transform: scale(0.1);
@@ -217,17 +217,6 @@ body {
     to {
       opacity: 1;
       transform: scale(1);
-    }
-  }
-
-  @keyframes fadeOut {
-    from {
-      opacity: 1;
-      transform: scale(1);
-    }
-    to {
-      opacity: 0.5;
-      transform: scale(0.9);
     }
   }
 
@@ -262,12 +251,9 @@ body {
     background-image: url('empty-cup.png'); /* Path to the empty cup image */
   }
 
-  .cup.added {
-    animation: fadeIn 0.5s ease-in-out; /* Fade-in animation for added cups */
-  }
-
+  .cup.added,
   .cup.removed {
-    animation: fadeOut 0.5s ease-in-out; /* Fade-out animation for removed cups */
+    animation: fade 0.5s ease-in-out; /* Unified fade animation for both added and removed cups */
   }
 
   .extra {
