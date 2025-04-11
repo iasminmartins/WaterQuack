@@ -82,10 +82,10 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Update progress display and notify when goal is reached
-  function updateProgress() {
+  function updateProgress(dailyCups = null, dailyGoal = null, removedCupIndex = null) {
     chrome.storage.sync.get(["dailyGoal", "dailyCups"], (data) => {
-      const goal = data.dailyGoal || 10;
-      const cups = data.dailyCups || 0;
+      const goal = dailyGoal || data.dailyGoal || 10;
+      const cups = dailyCups !== null ? dailyCups : data.dailyCups || 0;
 
       // Update the title with the number of cups drunk
       document.getElementById("cupsToday").textContent = cups;
@@ -152,7 +152,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const dailyCups = Math.max(0, (data.dailyCups || 0) - 1);
       chrome.storage.sync.set(
         { dailyCups, goalAchievedOnce: false },
-        updateProgress,
+        () => updateProgress(dailyCups),
       );
     });
   });
@@ -168,6 +168,10 @@ document.addEventListener("DOMContentLoaded", () => {
       cup.classList.add("cup");
       if (i < dailyCups) {
         cup.classList.add("full"); // Use full cup image
+        if (i === dailyCups - 1) {
+          cup.classList.add("added"); // Apply fade-in animation to the newly added cup
+          setTimeout(() => cup.classList.remove("added"), 500); // Remove animation class after it completes
+        }
       } else {
         cup.classList.add("empty"); // Use empty cup image
       }
