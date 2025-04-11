@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Update progress display and notify when goal is reached
-  function updateProgress(dailyCups = null, dailyGoal = null, isCupAdded = false) {
+  function updateProgress(dailyCups = null, dailyGoal = null, isCupAdded = false, isCupRemoved = false) {
     chrome.storage.sync.get(["dailyGoal", "dailyCups"], (data) => {
       const goal = dailyGoal || data.dailyGoal || 10;
       const cups = dailyCups !== null ? dailyCups : data.dailyCups || 0;
@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Update the hidden progress display
       progressDiv.textContent = `Current goal: ${goal} cup(s).`;
 
-      renderProgress(cups, goal, isCupAdded);
+      renderProgress(cups, goal, isCupAdded, isCupRemoved);
     });
   }
 
@@ -154,13 +154,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const dailyCups = Math.max(0, (data.dailyCups || 0) - 1);
       chrome.storage.sync.set(
         { dailyCups, goalAchievedOnce: false },
-        () => updateProgress(dailyCups),
+        () => updateProgress(dailyCups, null, false, true),
       );
     });
   });
 
   // Render the cup progress bar
-  function renderProgress(dailyCups, dailyGoal, isCupAdded = false) {
+  function renderProgress(dailyCups, dailyGoal, isCupAdded = false, isCupRemoved = false) {
     const cupProgress = document.getElementById("cupProgress");
     cupProgress.innerHTML = "";
 
@@ -176,6 +176,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       } else {
         cup.classList.add("empty"); // Use empty cup image
+        if (isCupRemoved && i === dailyCups) {
+          cup.classList.add("removed"); // Apply fade-out animation to the removed cup
+          setTimeout(() => cup.classList.remove("removed"), 500); // Remove animation class after it completes
+        }
       }
       cupProgress.appendChild(cup);
 

@@ -220,6 +220,17 @@ body {
     }
   }
 
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+      transform: scale(1);
+    }
+    to {
+      opacity: 0.5;
+      transform: scale(0.9);
+    }
+  }
+
   .cup-progress {
     max-width: 100%; /* Prevent horizontal overflow */
     padding: 10px 0;
@@ -253,6 +264,10 @@ body {
 
   .cup.added {
     animation: fadeIn 0.5s ease-in-out; /* Fade-in animation for added cups */
+  }
+
+  .cup.removed {
+    animation: fadeOut 0.5s ease-in-out; /* Fade-out animation for removed cups */
   }
 
   .extra {
