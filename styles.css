@@ -1,15 +1,26 @@
 /* Base and Typography */
+:root {
+  --dark-blue: #0066cc;
+  --blue: #76f7fc;
+  --light-blue: #adfbff;
+  --yellow: #ffd700;
+  --dark-yellow: #ffae00;
+  --white: #fff;
+  --gray: #999999; 
+  --shadow-blue: rgba(0, 191, 255, 0.4);
+}
+
 body {
   font-family: 'Arial', sans-serif;
   font-weight: 600;
-  background: #fff;
-  color: #0066cc;
+  background: var(--white);
+  color: var(--dark-blue);
   margin: 0;
   padding: 0;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: auto;
+  justify-content: flex-start;
+  align-items: flex-start;
+  min-height: 100vh;
 }
    
 h2 {
@@ -22,14 +33,14 @@ h2 {
 
 h3, h4, label {
   font-weight: 800;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 h3 {
   font-size: 1.5em;
   margin: 10px 0 20px;
   padding-bottom: 10px; 
-  border-bottom: 2.5px solid #0066cc;
+  border-bottom: 2.5px solid var(--dark-blue);
 }
 
 h4 { 
@@ -42,35 +53,34 @@ label {
   margin: 15px 0 10px;
 }
 
-.notification-section .toggle-container label {
+.toggle-container label {
   font-size: 1em; 
 }
 
 /* Input Styles */
-input, input[type="number"] {
+input {
   width: 80%; 
   padding: 8px;  
   margin-bottom: 15px;
-  border: 2.3px solid #0066cc; 
+  border: 2.3px solid var(--dark-blue); 
   border-radius: 20px; 
   font-size: 12px; 
   font-weight: bold;
-  color: #0066cc;
+  color: var(--dark-blue);
   box-sizing: border-box;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  flex: 1;
   text-align: center;
 }
 
 input::placeholder {
   font-size: 12px; 
-  color: #999999; 
+  color: var(--gray); 
   font-style: italic; 
 }
 
 input:focus {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(0, 191, 255, 0.4);
+  box-shadow: 0 0 0 3px var(--shadow-blue);
 }
 
 /* Layout Structure */
@@ -80,7 +90,7 @@ header {
   justify-content: center;
   margin-bottom: 20px;
   padding-bottom: 10px; 
-  border-bottom: 2.5px solid #0066cc;
+  border-bottom: 2.5px solid var(--dark-blue);
 }
 
 .header-icon {
@@ -90,8 +100,8 @@ header {
 }
 
 .rectangle {
-  background: #76f7fc;
-  border: 3.5px solid #0066cc;
+  background: var(--blue);
+  border: 3.5px solid var(--dark-blue);
   border-radius: 15px;
   padding: 15px;
   margin-bottom: 20px;
@@ -102,7 +112,7 @@ header {
 }
 
 .settings-card {
-  background-color: #adfbff;
+  background-color: var(--light-blue);
   padding: 5px;
   border-radius: 10px;
   margin-bottom: 20px;
@@ -113,7 +123,6 @@ header {
   background: url('background.png') no-repeat center center fixed;
   background-size: cover;
   border-radius: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
   width: 90%;
   max-width: 400px;
@@ -153,10 +162,10 @@ header {
   width: 100%;
 }
 
-/* Buttons */
+/* Button Styles */
 button {
-  background: #ffd700;
-  color: #fff;
+  background: var(--yellow);
+  color: var(--white);
   border: none;
   border-radius: 20px;
   padding: 10px 15px;
@@ -166,12 +175,12 @@ button {
   width: 100%;
   max-width: 120px;
   margin: 5px 0;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: background 0.3s, box-shadow 0.3s;
 }
 
 button:hover {
-  background: #ffae00;
+  background: var(--dark-yellow);
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -199,7 +208,6 @@ button:active {
 
 .row-break {
   flex-basis: 100%;
-  height: 0;
 }
 
 .cup {
@@ -221,12 +229,6 @@ button:active {
 .cup.added,
 .cup.removed {
   animation: fade 0.5s ease-in-out;
-}
-
-.extra {
-  font-size: 1.2em;
-  color: #4fc3f7;
-  align-self: center;
 }
 
 /* Cup Controls */
@@ -297,9 +299,9 @@ footer p {
   align-items: center;
   justify-content: space-between;
   padding: 0 8px;
-  background-color: #0066cc;
+  background-color: var(--dark-blue);
   border-radius: 24px;
-  color: white;
+  color: var(--white);
   font-size: 9px;
   font-weight: bold;
   cursor: pointer;
@@ -314,14 +316,14 @@ footer p {
   bottom: 3px;
   width: 18px;
   height: 18px;
-  background-color: white;
+  background-color: var(--white);
   border-radius: 50%;
   transition: transform 0.4s;
 }
 
 /* Toggle ON */
 input:checked + .slider {
-  background-color: #ffd700;
+  background-color: var(--yellow);
 }
 
 input:checked + .slider::before {
@@ -355,7 +357,6 @@ input:checked + .slider .off-text {
 /* Tooltip Style */
 .tooltip {
   font-size: 0.9em;
-  color: #666;
   margin-top: 5px;
   text-align: center;
 }
@@ -364,8 +365,8 @@ input:checked + .slider .off-text {
   display: inline-block;
   width: 18px;
   height: 18px;
-  background-color: #0066cc;
-  color: white;
+  background-color: var(--dark-blue);
+  color: var(--white);
   font-size: 12px;
   font-weight: bold;
   text-align: center;
@@ -388,8 +389,8 @@ input:checked + .slider .off-text {
   bottom: 125%;
   right: 0;
   transform: translateX(-10%);
-  background-color: #fff;
-  color: #0066cc;
+  background-color: var(--white);
+  color: var(--dark-blue);
   padding: 6px 10px;
   font-size: 0.7em;
   font-weight: 800;
@@ -407,6 +408,6 @@ input:checked + .slider .off-text {
   left: 50%;
   transform: translateX(-50%);
   border: 6px solid transparent;
-  border-top-color: #ffd700;
+  border-top-color: var(--yellow);
   z-index: 10;
 }
