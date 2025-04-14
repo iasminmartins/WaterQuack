@@ -1,413 +1,412 @@
-/* CSS file for WaterQuack */
-
 /* Base and Typography */
 body {
-    font-family: 'Arial', sans-serif;
-    font-weight: 600;
-    background: #fff;
-    color: #0066cc;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: auto;
+  font-family: 'Arial', sans-serif;
+  font-weight: 600;
+  background: #fff;
+  color: #0066cc;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto;
 }
-
+   
 h2 {
-    font-size: 2.1em;
-    margin: 0;
-    font-weight: 900;
-    letter-spacing: 1px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  font-size: 2.1em;
+  font-weight: 900;
+  letter-spacing: 1px;
+  margin: 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* subtle shadow for depth */
 }
 
-h3, h4 {
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-    font-weight: 800;
+h3, h4, label {
+  font-weight: 800;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 h3 {
-    margin: 10px 0 20px;
-    font-size: 1.5em;
-    padding-bottom: 15px;
-    border-bottom: 2.5px solid #0066cc;
+  font-size: 1.5em;
+  margin: 10px 0 20px;
+  padding-bottom: 10px; 
+  border-bottom: 2.5px solid #0066cc;
 }
 
-h4 {
-    font-size: 1.3em;
+h4 { 
+  font-size: 1.3em;
 }
 
 label {
-    font-weight: 800;
-    font-size: 1.1em;
-    display: block;
-    margin: 15px 0 10px;
-}
-
-.notification-section label {
-    font-size: 1.1em;
-    text-align: left;
-    display: block;
+  font-size: 1.1em;
+  display: block;
+  margin: 15px 0 10px;
 }
 
 .notification-section .toggle-container label {
-    font-size: 1em;
+  font-size: 1em; 
 }
 
 /* Input Styles */
 input, input[type="number"] {
-    width: 80%;
-    padding: 8px;
-    margin-bottom: 15px;
-    border: 2.3px solid #0066cc;
-    border-radius: 20px;
-    font-size: 12px;
-    box-sizing: border-box;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 80%; 
+  padding: 8px;  
+  margin-bottom: 15px;
+  border: 2.3px solid #0066cc; 
+  border-radius: 20px; 
+  font-size: 12px; 
+  font-weight: bold;
+  color: #0066cc;
+  box-sizing: border-box;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  text-align: center;
 }
 
 input::placeholder {
-    font-size: 12px;
-    color: #999999;
-    font-style: italic;
+  font-size: 12px; 
+  color: #999999; 
+  font-style: italic; 
 }
 
 input:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(0, 191, 255, 0.4);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 191, 255, 0.4);
 }
 
-/* Layout and Structure */
+/* Layout Structure */
 header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 2.5px solid #0066cc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  padding-bottom: 10px; 
+  border-bottom: 2.5px solid #0066cc;
 }
 
 .header-icon {
-    width: 50px;
-    height: 50px;
-    margin-right: 10px;
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
 }
 
 .rectangle {
-    background: #76f7fc;
-    border: 3.5px solid #0066cc;
-    border-radius: 15px;
-    padding: 15px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    width: 300px;
-    overflow: hidden; /* Prevent content overflow */
-    position: relative;
+  background: #76f7fc;
+  border: 3.5px solid #0066cc;
+  border-radius: 15px;
+  padding: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 300px;
+  overflow: hidden;
+  position: relative;
 }
 
 .settings-card {
-    background-color: #adfbff;
-    padding: 5px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #adfbff;
+  padding: 5px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .container {
-    background: url('background.png') no-repeat center center fixed;
-    background-size: cover;
-    border-radius: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    width: 90%;
-    max-width: 400px;
-    text-align: center;
-    min-height: 100vh;
-    overflow-y: auto;
+  background: url('background.png') no-repeat center center fixed;
+  background-size: cover;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  min-height: 100vh; /* Ensure it covers the full viewport height */
+  overflow-y: auto;
 }
 
-.goal-section,
-.reminder-section,
-.notification-section {
-    margin-bottom: 20px;
-}
-
+/* Sections */
 .goal-section,
 .reminder-section {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-}
-
-.goal-section label,
-.goal-section input,
-.goal-section button,
-.reminder-section label,
-.reminder-section input,
-.reminder-section button {
-    flex: 1;
-    text-align: center;
-}
-
-.goal-section input,
-.reminder-section input {
-    max-width: 100%;
-    padding: 6px;
-    font-size: 14px;
-    color: #0066cc;
-    font-weight: bold;
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
+  align-items: stretch; /* Ensure full width alignment */
+  gap: 10px;
+  margin-bottom: 15px;
 }
 
 .notification-section {
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    gap: 10px;
-    margin-bottom: 5px;
-    margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 15px;
+  margin-left: 10px;
+}
+
+.notification-section label {
+  text-align: left;
 }
 
 .notification-section .toggle-container {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 10px;
-    width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  width: 100%;
 }
 
-/* Button Styles */
+/* Buttons */
 button {
-    background: #ffd700;
-    color: #fff;
-    border: none;
-    border-radius: 20px;
-    padding: 10px 15px;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 14px;
-    width: 100%;
-    max-width: 120px;
-    margin: 5px 0;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    transition: background 0.3s, box-shadow 0.3s;
+  background: #ffd700;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+  width: 100%;
+  max-width: 120px;
+  margin: 5px 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: background 0.3s, box-shadow 0.3s;
 }
 
 button:hover {
-    background: #ffae00;
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
+  background: #ffae00;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
 }
 
 button:active {
-    animation: buttonBounce 0.2s ease-in-out;
+  animation: buttonBounce 0.2s ease-in-out;
 }
 
+/* Bounce effect when button is clicked */
 @keyframes buttonBounce {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.1);
-    }
-    100% {
-        transform: scale(1);
-    }
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
 }
 
-/* Cup Styles */
+/* Cups & Tracking */
 .cup-progress {
-    max-width: 100%;
-    padding: 10px 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 8px;
-    margin-bottom: 15px;
+  max-width: 100%;
+  padding: 10px 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.row-break {
+  flex-basis: 100%;
+  height: 0;
 }
 
 .cup {
-    width: 40px;
-    height: 60px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
+  width: 40px;
+  height: 60px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .cup.full {
-    background-image: url('full-cup.png');
+  background-image: url('full-cup.png');
 }
 
 .cup.empty {
-    background-image: url('empty-cup.png');
+  background-image: url('empty-cup.png');
 }
 
 .cup.added,
 .cup.removed {
-    animation: fade 0.5s ease-in-out;
+  animation: fade 0.5s ease-in-out;
 }
 
+.extra {
+  font-size: 1.2em;
+  color: #4fc3f7;
+  align-self: center;
+}
+
+/* Cup Controls */
+.cup-controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* Fade effect for added/removed cups */
 @keyframes fade {
-    from {
-        opacity: 0;
-        transform: scale(0.1);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
+  from {
+    opacity: 0;
+    transform: scale(0.1);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
-/* Footer Styles */
+/* Footer */
 footer {
-    font-size: 0.9em;
-    font-weight: bold;
-    margin: 40px 0 5px;
+  font-size: 0.9em;
+  font-weight: bold;
+  margin: 40px 0 5px;
 }
 
 footer p {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-    margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin: 0;
 }
 
-/* Toggle Styles */
+/* Toggle Switches */
 .toggle-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-    margin-bottom: 10px;
-    width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 10px;
+  width: 100%;
 }
 
 .toggle-switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 24px;
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 24px;
 }
 
 .toggle-switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
+  opacity: 0;
+  width: 0;
+  height: 0;
 }
 
+/* Toggle slider base style */
 .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #0066cc;
-    transition: 0.4s;
-    border-radius: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 8px;
-    font-size: 9px;
-    font-weight: bold;
-    color: white;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  background-color: #0066cc;
+  border-radius: 24px;
+  color: white;
+  font-size: 9px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.4s;
 }
 
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 18px;
-    width: 18px;
-    left: 3px;
-    bottom: 3px;
-    background-color: white;
-    transition: transform 0.4s;
-    border-radius: 50%;
+/* Toggle Knob */
+.slider::before {
+  content: "";
+  position: absolute;
+  left: 3px;
+  bottom: 3px;
+  width: 18px;
+  height: 18px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.4s;
 }
 
+/* Toggle ON */
 input:checked + .slider {
-    background-color: #ffd700;
+  background-color: #ffd700;
 }
 
-input:checked + .slider:before {
-    transform: translateX(36px);
+input:checked + .slider::before {
+  transform: translateX(36px);
+}
+
+/* Toggle text visibility */
+.slider span {
+  position: absolute;
+  transition: opacity 0.4s;
 }
 
 .slider .on-text {
-    left: 8px;
-    opacity: 0;
+  left: 8px;
+  opacity: 0;
 }
 
 .slider .off-text {
-    right: 8px;
-    opacity: 1;
+  right: 8px;
+  opacity: 1;
 }
 
 input:checked + .slider .on-text {
-    opacity: 1;
+  opacity: 1;
 }
 
 input:checked + .slider .off-text {
-    opacity: 0;
+  opacity: 0;
 }
 
-/* Tooltip Styles */
+/* Tooltip Style */
 .tooltip {
-    font-size: 0.9em;
-    color: #666;
-    margin-top: 5px;
-    text-align: center;
+  font-size: 0.9em;
+  color: #666;
+  margin-top: 5px;
+  text-align: center;
 }
 
 .tooltip-icon {
-    display: inline-block;
-    width: 18px;
-    height: 18px;
-    background-color: #0066cc;
-    color: white;
-    font-size: 12px;
-    font-weight: bold;
-    text-align: center;
-    line-height: 18px;
-    border-radius: 50%;
-    cursor: pointer;
-    position: relative;
-    transition: transform 0.2s, box-shadow 0.2s;
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  background-color: #0066cc;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 18px;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .tooltip-icon:hover {
-    transform: scale(1.1);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+/* Tooltip Bubble */
 .tooltip-icon:hover::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    bottom: 125%;
-    right: 0;
-    transform: translateX(-10%);
-    background-color: #ffffff;
-    color: #0066cc;
-    padding: 6px 10px;
-    border-radius: 4px;
-    font-size: 0.7em;
-    font-weight: 800;
-    white-space: nowrap;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    z-index: 10;
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 125%;
+  right: 0;
+  transform: translateX(-10%);
+  background-color: #fff;
+  color: #0066cc;
+  padding: 6px 10px;
+  font-size: 0.7em;
+  font-weight: 800;
+  white-space: nowrap;
+  border-radius: 4px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 10;
 }
 
+/* Tooltip Arrow */
 .tooltip-icon:hover::before {
-    content: "";
-    position: absolute;
-    bottom: 115%;
-    left: 50%;
-    transform: translateX(-50%);
-    border-width: 6px;
-    border-style: solid;
-    border-color: #ffd700 transparent transparent transparent;
-    z-index: 10;
+  content: "";
+  position: absolute;
+  bottom: 115%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: #ffd700;
+  z-index: 10;
 }
-
