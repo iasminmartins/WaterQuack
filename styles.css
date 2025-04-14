@@ -1,4 +1,6 @@
-/* Base and Typography */
+/* ----------------------------------------------
+   Variables
+---------------------------------------------- */
 :root {
   --dark-blue: #0066cc;
   --blue: #76f7fc;
@@ -10,17 +12,20 @@
   --shadow-blue: rgba(0, 191, 255, 0.4);
 }
 
+/* ----------------------------------------------
+   Base and Typography
+---------------------------------------------- */
 body {
-  font-family: 'Arial', sans-serif;
-  font-weight: 600;
-  background: var(--white);
-  color: var(--dark-blue);
   margin: 0;
   padding: 0;
+  min-height: 100vh;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  min-height: 100vh;
+  font-family: 'Arial', sans-serif;
+  font-weight: 600;
+  color: var(--dark-blue);
+  background: var(--white);
 }
    
 h2 {
@@ -57,14 +62,16 @@ label {
   font-size: 1em; 
 }
 
-/* Input Styles */
+/* ----------------------------------------------
+   Input Style
+---------------------------------------------- */
 input {
   width: 80%; 
   padding: 8px;  
   margin-bottom: 15px;
   border: 2.3px solid var(--dark-blue); 
   border-radius: 20px; 
-  font-size: 12px; 
+  font-size: 1em; 
   font-weight: bold;
   color: var(--dark-blue);
   box-sizing: border-box;
@@ -73,7 +80,7 @@ input {
 }
 
 input::placeholder {
-  font-size: 12px; 
+  font-size: 1em; 
   color: var(--gray); 
   font-style: italic; 
 }
@@ -83,7 +90,21 @@ input:focus {
   box-shadow: 0 0 0 3px var(--shadow-blue);
 }
 
-/* Layout Structure */
+/* ----------------------------------------------
+   Layout Structure
+---------------------------------------------- */
+.container {
+  background: url('background.png') no-repeat center center fixed;
+  background-size: cover;
+  border-radius: 20px;
+  padding: 20px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  min-height: 100vh; /* Ensure it covers the full viewport height */
+  overflow-y: auto;
+}
+
 header {
   display: flex;
   align-items: center;
@@ -119,34 +140,34 @@ header {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.container {
-  background: url('background.png') no-repeat center center fixed;
-  background-size: cover;
-  border-radius: 20px;
-  padding: 20px;
-  width: 90%;
-  max-width: 400px;
-  text-align: center;
-  min-height: 100vh; /* Ensure it covers the full viewport height */
-  overflow-y: auto;
+footer {
+  font-size: 0.9em;
+  font-weight: bold;
+  margin: 40px 0 5px;
 }
 
-/* Sections */
+footer p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin: 0;
+}
+
+/* ----------------------------------------------
+   Sections
+---------------------------------------------- */
 .goal-section,
-.reminder-section {
+.reminder-section,
+.notification-section {
   display: flex;
   flex-direction: column; /* Stack elements vertically */
-  align-items: stretch; /* Ensure full width alignment */
   gap: 10px;
   margin-bottom: 15px;
 }
 
 .notification-section {
-  display: flex;
-  flex-direction: column;
   align-items: flex-start;
-  gap: 10px;
-  margin-bottom: 15px;
   margin-left: 10px;
 }
 
@@ -162,7 +183,9 @@ header {
   width: 100%;
 }
 
-/* Button Styles */
+/* ----------------------------------------------
+   Buttons Style
+---------------------------------------------- */
 button {
   background: var(--yellow);
   color: var(--white);
@@ -171,7 +194,7 @@ button {
   padding: 10px 15px;
   cursor: pointer;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 1.2em;
   width: 100%;
   max-width: 120px;
   margin: 5px 0;
@@ -195,7 +218,9 @@ button:active {
   100% { transform: scale(1); }
 }
 
-/* Cups & Tracking */
+/* ----------------------------------------------
+   Cups and Progress
+---------------------------------------------- */
 .cup-progress {
   max-width: 100%;
   padding: 10px 0;
@@ -218,6 +243,12 @@ button:active {
   background-position: center;
 }
 
+.cup-controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
 .cup.full {
   background-image: url('full-cup.png');
 }
@@ -231,41 +262,15 @@ button:active {
   animation: fade 0.5s ease-in-out;
 }
 
-/* Cup Controls */
-.cup-controls {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-}
-
 /* Fade effect for added/removed cups */
 @keyframes fade {
-  from {
-    opacity: 0;
-    transform: scale(0.1);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  from { opacity: 0; transform: scale(0.1); }
+  to { opacity: 1; transform: scale(1); }
 }
 
-/* Footer */
-footer {
-  font-size: 0.9em;
-  font-weight: bold;
-  margin: 40px 0 5px;
-}
-
-footer p {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  margin: 0;
-}
-
-/* Toggle Switches */
+/* ----------------------------------------------
+   Toggle Switch Style
+---------------------------------------------- */
 .toggle-container {
   display: flex;
   align-items: center;
@@ -302,7 +307,7 @@ footer p {
   background-color: var(--dark-blue);
   border-radius: 24px;
   color: var(--white);
-  font-size: 9px;
+  font-size: 0.75em;
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.4s;
@@ -354,7 +359,9 @@ input:checked + .slider .off-text {
   opacity: 0;
 }
 
-/* Tooltip Style */
+/* ----------------------------------------------
+   Tooltip Style
+---------------------------------------------- */
 .tooltip {
   font-size: 0.9em;
   margin-top: 5px;
@@ -367,7 +374,7 @@ input:checked + .slider .off-text {
   height: 18px;
   background-color: var(--dark-blue);
   color: var(--white);
-  font-size: 12px;
+  font-size: 1em;
   font-weight: bold;
   text-align: center;
   line-height: 18px;
