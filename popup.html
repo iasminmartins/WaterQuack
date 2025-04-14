@@ -17,13 +17,14 @@
         <img src="icon128.png" alt="Ducky" class="header-icon">
         <h2>WaterQuack</h2>
       </header>
-      <div class="settings-card"> <!-- Added card around the cups section -->
+      <!-- Card for Cups -->
+      <div class="settings-card"> 
         <section class="cups-section">
-          <h3>Cups Drunk Today: <span id="cupsToday">0</span></h3>
+          <h4>Cups Drunk Today: <span id="cupsToday">0</span></h4>
           <div id="cupProgress" class="cup-progress"></div>
         </section>
       </div>
-      <div class="cup-controls"> <!-- Buttons remain outside the card -->
+      <div class="cup-controls"> 
         <button id="addCup">Add Cup</button>
         <button id="removeCup">Remove Cup</button>
       </div>
@@ -31,9 +32,8 @@
 
     <!-- Section for settings -->
     <div class="rectangle">
-      <h4>Settings</h4>
-
-      <!-- Card for Daily Goal -->
+      <h3>Settings</h3>
+      <!-- Card for Daily Water Goal -->
       <div class="settings-card">
         <section class="goal-section">
           <label for="goal">⚙️ Set your daily water goal (in cups):</label>

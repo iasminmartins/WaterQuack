@@ -1,7 +1,10 @@
+/* CSS file for WaterQuack */
+
+/* Base and Typography */
 body {
     font-family: 'Arial', sans-serif;
     font-weight: 600;
-    background: #ffffff;
+    background: #fff;
     color: #0066cc;
     margin: 0;
     padding: 0;
@@ -9,43 +12,109 @@ body {
     justify-content: center;
     align-items: center;
     height: auto;
-  }
+}
 
-  .rectangle {
+h2 {
+    font-size: 2.1em;
+    margin: 0;
+    font-weight: 900;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+h3, h4 {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    font-weight: 800;
+}
+
+h3 {
+    margin: 10px 0 20px;
+    font-size: 1.5em;
+    padding-bottom: 15px;
+    border-bottom: 2.5px solid #0066cc;
+}
+
+h4 {
+    font-size: 1.3em;
+}
+
+label {
+    font-weight: 800;
+    font-size: 1.1em;
+    display: block;
+    margin: 15px 0 10px;
+}
+
+.notification-section label {
+    font-size: 1.1em;
+    text-align: left;
+    display: block;
+}
+
+.notification-section .toggle-container label {
+    font-size: 1em;
+}
+
+/* Input Styles */
+input, input[type="number"] {
+    width: 80%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 2.3px solid #0066cc;
+    border-radius: 20px;
+    font-size: 12px;
+    box-sizing: border-box;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+input::placeholder {
+    font-size: 12px;
+    color: #999999;
+    font-style: italic;
+}
+
+input:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 191, 255, 0.4);
+}
+
+/* Layout and Structure */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2.5px solid #0066cc;
+}
+
+.header-icon {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+.rectangle {
     background: #76f7fc;
     border: 3.5px solid #0066cc;
-    border-radius: 10px;
+    border-radius: 15px;
     padding: 15px;
     margin-bottom: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    width: 300px; /* Set a fixed width */
+    width: 300px;
     overflow: hidden; /* Prevent content overflow */
     position: relative;
-  }
+}
 
-  input, input[type="number"] {
-    width: 80%; 
-    padding: 8px;  
-    margin-bottom: 15px; 
-    border: 2.3px solid #0066cc; 
-    border-radius: 20px; 
-    font-size: 12px; 
-    box-sizing: border-box;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
+.settings-card {
+    background-color: #adfbff;
+    padding: 5px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-  input::placeholder {
-    font-size: 12px; 
-    color: #999999; 
-    font-style: italic; 
-  }
-
-  input:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(0, 191, 255, 0.4);
-  }
-
-  .container {
+.container {
     background: url('background.png') no-repeat center center fixed;
     background-size: cover;
     border-radius: 20px;
@@ -54,123 +123,62 @@ body {
     width: 90%;
     max-width: 400px;
     text-align: center;
-    min-height: 100vh; /* Ensure it covers the full viewport height */
+    min-height: 100vh;
     overflow-y: auto;
-  }
+}
 
-  header {
+.goal-section,
+.reminder-section,
+.notification-section {
+    margin-bottom: 20px;
+}
+
+.goal-section,
+.reminder-section {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-    padding-bottom: 10px; 
-    border-bottom: 2.5px solid #0066cc;
-  }
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+}
 
-  .header-icon {
-    width: 50px;
-    height: 50px;
-    margin-right: 10px;
-  }
+.goal-section label,
+.goal-section input,
+.goal-section button,
+.reminder-section label,
+.reminder-section input,
+.reminder-section button {
+    flex: 1;
+    text-align: center;
+}
 
-  h2 {
-    font-size: 2.1em;
-    margin: 0;
-    color: #0066cc;
-    font-weight: 900;
-    letter-spacing: 1px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-  }
-
-  h3 {
-    color: #0066cc;
-    font-size: 1.3em;
-    font-weight: 800;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-  }
-
-  h4 {
-    margin-bottom: 20px;
-    font-size: 1.5em;
-    color: #0066cc;
-    font-weight: 800;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-    margin-top: 10px;
-    padding-bottom: 15px; 
-    border-bottom: 2.5px solid #0066cc;
-  }
-
-  .goal-section,
-  .reminder-section,
-  .notification-section {
-    margin-bottom: 20px;
-  }
-
-  .goal-section,
-  .reminder-section {
-    display: flex;
-    flex-direction: column; /* Stack elements vertically */
-    align-items: stretch; /* Ensure full width alignment */
-    gap: 10px; /* Add spacing between elements */
-  }
-
-  .goal-section label,
-  .goal-section input,
-  .goal-section button,
-  .reminder-section label,
-  .reminder-section input,
-  .reminder-section button {
-    flex: 1; /* Ensure equal width for all elements */
-    text-align: center; /* Center-align text for better appearance */
-  }
-
-  .goal-section input,
-  .reminder-section input {
-    max-width: 100%; /* Prevent overflow */
+.goal-section input,
+.reminder-section input {
+    max-width: 100%;
     padding: 6px;
     font-size: 14px;
-    color:#0066cc;
+    color: #0066cc;
     font-weight: bold;
-  }
+}
 
-  .notification-section {
+.notification-section {
     display: flex;
-    flex-direction: column; /* Stack items vertically */
-    align-items: left; /* Align items to the left */
-    gap: 10px; /* Add spacing between toggle containers */
+    flex-direction: column;
+    align-items: left;
+    gap: 10px;
     margin-bottom: 5px;
     margin-left: 10px;
-  }
- 
-  .notification-section label {
-    color: #0066cc;
-    font-size: 1.1em;
-    text-align: left; /* Align label to the left */
-    display: block; /* Ensure it spans the full width */
-  }
+}
 
-  .notification-section .toggle-container {
+.notification-section .toggle-container {
     display: flex;
-    align-items: center; /* Vertically align toggle, label, and tooltip */
-    justify-content: flex-start; /* Align items to the left */
-    gap: 10px; /* Add spacing between toggle, label, and tooltip */  
-    width: 100%; /* Ensure full width alignment */
-  }
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    width: 100%;
+}
 
-  .notification-section .toggle-container label {
-    font-size: 1em; /* Smaller font size for "Mute notifications" and "Stop notifications" */
-  }
-
-  label {
-    font-weight: 800;
-    font-size: 1.1em;
-    display: block;
-    margin-top: 15px;
-    margin-bottom: 10px;
-    color: #0066cc; 
-  }
-
-  button {
+/* Button Styles */
+button {
     background: #ffd700;
     color: #fff;
     border: none;
@@ -178,142 +186,124 @@ body {
     padding: 10px 15px;
     cursor: pointer;
     font-weight: bold;
-    transition: background 0.3s, box-shadow 0.3s;
-    margin: 5px 0; 
-    width: 100%; 
-    max-width: 120px; 
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* Add shadow */
     font-size: 14px;
-    margin-bottom: 5px;
-    margin-top: 5px;
-  }
+    width: 100%;
+    max-width: 120px;
+    margin: 5px 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: background 0.3s, box-shadow 0.3s;
+}
 
-  @keyframes buttonBounce {
+button:hover {
+    background: #ffae00;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
+}
+
+button:active {
+    animation: buttonBounce 0.2s ease-in-out;
+}
+
+@keyframes buttonBounce {
     0% {
-      transform: scale(1);
+        transform: scale(1);
     }
     50% {
-      transform: scale(1.1);
+        transform: scale(1.1);
     }
     100% {
-      transform: scale(1);
+        transform: scale(1);
     }
-  }
+}
 
-  button:active {
-    animation: buttonBounce 0.2s ease-in-out;
-  }
-
-  button:hover {
-    background: #ffae00;
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1); /* Enhance shadow on hover */
-  }
-
-  @keyframes fade {
-    from {
-      opacity: 0;
-      transform: scale(0.1);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-
-  .cup-progress {
-    max-width: 100%; /* Prevent horizontal overflow */
+/* Cup Styles */
+.cup-progress {
+    max-width: 100%;
     padding: 10px 0;
     display: flex;
-    flex-wrap: wrap; /* Allows cups to move to new rows */
-    justify-content: center; /* Center cups horizontally */
-    gap: 8px; /* Space between cups */
-    margin-bottom: 15px; 
-  }
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 15px;
+}
 
-  .row-break {
-    flex-basis: 100%; /* Force a new row */
-    height: 0; /* No visible height */
-  }
-
-  .cup {
-    width: 40px; 
+.cup {
+    width: 40px;
     height: 60px;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-  }
+}
 
-  .cup.full {
-    background-image: url('full-cup.png'); /* Path to the full cup image */
-  }
+.cup.full {
+    background-image: url('full-cup.png');
+}
 
-  .cup.empty {
-    background-image: url('empty-cup.png'); /* Path to the empty cup image */
-  }
+.cup.empty {
+    background-image: url('empty-cup.png');
+}
 
-  .cup.added,
-  .cup.removed {
-    animation: fade 0.5s ease-in-out; /* Unified fade animation for both added and removed cups */
-  }
+.cup.added,
+.cup.removed {
+    animation: fade 0.5s ease-in-out;
+}
 
-  .extra {
-    font-size: 1.2em;
-    color: #4fc3f7;
-    align-self: center;
-  }
+@keyframes fade {
+    from {
+        opacity: 0;
+        transform: scale(0.1);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
 
-  .cup-controls {
-    display: flex; 
-    justify-content: center; 
-    gap: 10px;
-  }
-
-  footer {
+/* Footer Styles */
+footer {
     font-size: 0.9em;
     font-weight: bold;
-    color: #0066cc;
-    margin-top: 40px;
-    margin-bottom: 5px;
-  }
+    margin: 40px 0 5px;
+}
 
-  footer p {
+footer p {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 5px;
     margin: 0;
-  }
+}
 
-  .toggle-container {
+/* Toggle Styles */
+.toggle-container {
     display: flex;
-    align-items: center; /* Vertically align toggle and label */
-    justify-content: center; /* Center align toggle and label */
-    gap: 15px; /* Add spacing between toggle and label */
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
     margin-bottom: 10px;
-    width: 100%; /* Ensure full width alignment */
-  }
+    width: 100%;
+}
 
-  .toggle-switch {
+.toggle-switch {
     position: relative;
     display: inline-block;
     width: 60px;
     height: 24px;
-  }
+}
 
-  .toggle-switch input {
+.toggle-switch input {
     opacity: 0;
     width: 0;
     height: 0;
-  }
+}
 
-  .slider {
+.slider {
     position: absolute;
     cursor: pointer;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #0066cc; /* Blue when off */
+    background-color: #0066cc;
     transition: 0.4s;
     border-radius: 24px;
     display: flex;
@@ -323,9 +313,9 @@ body {
     font-size: 9px;
     font-weight: bold;
     color: white;
-  }
+}
 
-  .slider:before {
+.slider:before {
     position: absolute;
     content: "";
     height: 18px;
@@ -335,53 +325,43 @@ body {
     background-color: white;
     transition: transform 0.4s;
     border-radius: 50%;
-  }
+}
 
-  input:checked + .slider {
-    background-color: #ffd700; /* Yellow when on */
-  }
+input:checked + .slider {
+    background-color: #ffd700;
+}
 
-  input:checked + .slider:before {
-    transform: translateX(36px); /* Move the knob to the right */
-  }
+input:checked + .slider:before {
+    transform: translateX(36px);
+}
 
-  .slider span {
-    position: absolute;
-    transition: opacity 0.4s;
-  }
+.slider .on-text {
+    left: 8px;
+    opacity: 0;
+}
 
-  .slider .on-text,
-  .slider .off-text {
-    position: absolute;
-    transition: opacity 0.4s;
-  }
+.slider .off-text {
+    right: 8px;
+    opacity: 1;
+}
 
-  .slider .on-text {
-    left: 8px; /* Restore "ON" position */
-    opacity: 0; /* Hidden by default */
-  }
+input:checked + .slider .on-text {
+    opacity: 1;
+}
 
-  .slider .off-text {
-    right: 8px; /* Restore "OFF" position */
-    opacity: 1; /* Visible by default */
-  }
+input:checked + .slider .off-text {
+    opacity: 0;
+}
 
-  input:checked + .slider .on-text {
-    opacity: 1; /* Show "ON" when active */
-  }
-
-  input:checked + .slider .off-text {
-    opacity: 0; /* Hide "OFF" when active */
-  }
-
-  .tooltip {
+/* Tooltip Styles */
+.tooltip {
     font-size: 0.9em;
     color: #666;
     margin-top: 5px;
     text-align: center;
-  }
+}
 
-  .tooltip-icon {
+.tooltip-icon {
     display: inline-block;
     width: 18px;
     height: 18px;
@@ -395,22 +375,21 @@ body {
     cursor: pointer;
     position: relative;
     transition: transform 0.2s, box-shadow 0.2s;
-  }
+}
 
-  .tooltip-icon:hover {
-    transform: scale(1.1); /* Slightly enlarge the icon */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
-  }
+.tooltip-icon:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
 
-  .tooltip-icon:hover::after {
+.tooltip-icon:hover::after {
     content: attr(data-tooltip);
     position: absolute;
-    bottom: 125%; /* Position above the icon */
-    left: auto; /* Remove default centering */
-    right: 0; /* Align tooltip to the left of the container */
-    transform: translateX(-10%); /* Slightly shift left for better alignment */
-    background-color: #ffffff; /* Change tooltip background color */
-    color: #0066cc; /* Change tooltip text color */
+    bottom: 125%;
+    right: 0;
+    transform: translateX(-10%);
+    background-color: #ffffff;
+    color: #0066cc;
     padding: 6px 10px;
     border-radius: 4px;
     font-size: 0.7em;
@@ -418,24 +397,17 @@ body {
     white-space: nowrap;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     z-index: 10;
-  }
+}
 
-  .tooltip-icon:hover::before {
+.tooltip-icon:hover::before {
     content: "";
     position: absolute;
-    bottom: 115%; /* Position the arrow */
+    bottom: 115%;
     left: 50%;
     transform: translateX(-50%);
     border-width: 6px;
     border-style: solid;
-    border-color: #ffd700 transparent transparent transparent; /* Match tooltip background */
+    border-color: #ffd700 transparent transparent transparent;
     z-index: 10;
-  }
+}
 
-  .settings-card {
-    background-color: #adfbff; /* Light baby blue background */
-    padding: 5px; /* Soft padding */
-    border-radius: 10px; /* Rounded corners */
-    margin-bottom: 20px; /* Spacing between cards */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  }
