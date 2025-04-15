@@ -285,4 +285,38 @@ document.addEventListener("DOMContentLoaded", () => {
       element.classList.remove("focused");
     });
   });
+
+  // Mode toggle buttons
+  const lightModeButton = document.getElementById("lightMode");
+  const darkModeButton = document.getElementById("darkMode");
+  const colorblindModeButton = document.getElementById("colorblindMode");
+
+  // Apply light mode
+  lightModeButton.addEventListener("click", () => {
+    document.documentElement.classList.remove("dark-mode", "colorblind-mode");
+    chrome.storage.sync.set({ mode: "light" });
+  });
+
+  // Apply dark mode
+  darkModeButton.addEventListener("click", () => {
+    document.documentElement.classList.add("dark-mode");
+    document.documentElement.classList.remove("colorblind-mode");
+    chrome.storage.sync.set({ mode: "dark" });
+  });
+
+  // Apply colorblind mode
+  colorblindModeButton.addEventListener("click", () => {
+    document.documentElement.classList.add("colorblind-mode");
+    document.documentElement.classList.remove("dark-mode");
+    chrome.storage.sync.set({ mode: "colorblind" });
+  });
+
+  // Load saved mode from storage
+  chrome.storage.sync.get("mode", (data) => {
+    if (data.mode === "dark") {
+      document.documentElement.classList.add("dark-mode");
+    } else if (data.mode === "colorblind") {
+      document.documentElement.classList.add("colorblind-mode");
+    }
+  });
 });

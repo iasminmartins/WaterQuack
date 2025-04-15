@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "WaterQuack",
-    "version": "2.0",
+    "version": "1.0",
     "description": "A friendly duck that quacks to remind you to drink water!",
     "permissions": ["notifications", "alarms", "storage"],
     "background": {

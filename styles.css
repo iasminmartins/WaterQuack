@@ -1,15 +1,47 @@
 /* ----------------------------------------------
    Variables
 ---------------------------------------------- */
+
+/* Ligh Mode (default) */
 :root {
-  --dark-blue: #0066cc;
-  --blue: #76f7fc;
-  --light-blue: #adfbff;
-  --yellow: #ffd700;
-  --dark-yellow: #ffae00;
-  --white: #fff;
-  --gray: #999999; 
-  --shadow-blue: rgba(0, 191, 255, 0.4);
+  --color-primary: #0066cc;         
+  --color-accent: #76f7fc;          
+  --color-accent-light: #adfbff;    
+  --color-warning: #ffd700;         
+  --color-warning-dark: #ffae00;    
+  --color-background: #ffffff;      
+  --color-surface: #fff;            
+  --color-muted: #999999;           
+  --color-shadow: rgba(0, 191, 255, 0.4); 
+  --color-text: #0066cc;            
+}
+
+/* Dark Mode */
+:root.dark-mode {
+  --color-primary: #1e1e2f;
+  --color-accent: #3a3a5c;
+  --color-accent-light: #4f4f7a;
+  --color-warning: #f1c40f;
+  --color-warning-dark: #d4ac0d;
+  --color-surface: #e0e0e0;
+  --color-muted: #7f8c8d;
+  --color-shadow: rgba(58, 58, 92, 0.4);
+  --color-background: #121212;
+  --color-text: #ffffff;
+}
+
+/* Refined Colorblind Mode */
+:root.colorblind-mode {
+  --color-primary: #0072B2;       /* deep blue */
+  --color-accent: #009E73;            /* green-teal */
+  --color-accent-light: #F0E442;      /* bright yellow */
+  --color-warning: #E69F00;          /* orange */
+  --color-warning-dark: #D55E00;     /* orange-red */
+  --color-surface: #ffffff;
+  --color-muted: #999999;
+  --color-shadow: rgba(0, 114, 178, 0.4); /* based on --dark-blue */
+  --color-background: #F7F7F7;
+  --color-text: #000000;
 }
 
 /* ----------------------------------------------
@@ -24,8 +56,8 @@ body {
   align-items: flex-start;
   font-family: 'Arial', sans-serif;
   font-weight: 600;
-  color: var(--dark-blue);
-  background: var(--white);
+  background-color: var(--color-background);
+  color: var(--color-text);
 }
    
 h2 {
@@ -45,7 +77,7 @@ h3 {
   font-size: 1.5em;
   margin: 10px 0 20px;
   padding-bottom: 10px; 
-  border-bottom: 2.5px solid var(--dark-blue);
+  border-bottom: 2.5px solid var(--color-primary);
 }
 
 h4 { 
@@ -69,11 +101,11 @@ input {
   width: 80%; 
   padding: 8px;  
   margin-bottom: 15px;
-  border: 2.3px solid var(--dark-blue); 
+  border: 2.3px solid var(--color-primary); 
   border-radius: 20px; 
   font-size: 1em; 
   font-weight: bold;
-  color: var(--dark-blue);
+  color: var(--color-primary);
   box-sizing: border-box;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
@@ -81,13 +113,13 @@ input {
 
 input::placeholder {
   font-size: 1em; 
-  color: var(--gray); 
+  color: var(--color-muted); 
   font-style: italic; 
 }
 
 input:focus {
   outline: none;
-  box-shadow: 0 0 0 3px var(--shadow-blue);
+  box-shadow: 0 0 0 3px var(--color-shadow);
 }
 
 /* ----------------------------------------------
@@ -111,7 +143,7 @@ header {
   justify-content: center;
   margin-bottom: 20px;
   padding-bottom: 10px; 
-  border-bottom: 2.5px solid var(--dark-blue);
+  border-bottom: 2.5px solid var(--color-primary);
 }
 
 .header-icon {
@@ -121,8 +153,8 @@ header {
 }
 
 .rectangle {
-  background: var(--blue);
-  border: 3.5px solid var(--dark-blue);
+  background: var(--color-accent);
+  border: 3.5px solid var(--color-primary);
   border-radius: 15px;
   padding: 15px;
   margin-bottom: 20px;
@@ -130,14 +162,17 @@ header {
   width: 300px;
   overflow: hidden;
   position: relative;
+  background: var(--color-accent);
+  border: 3.5px solid var(--color-primary);
 }
 
 .settings-card {
-  background-color: var(--light-blue);
+  background-color: var(--color-accent-light);
   padding: 5px;
   border-radius: 10px;
   margin-bottom: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: var(--color-accent-light);
 }
 
 footer {
@@ -187,8 +222,8 @@ footer p {
    Buttons Style
 ---------------------------------------------- */
 button {
-  background: var(--yellow);
-  color: var(--white);
+  background: var(--color-warning);
+  color: var(--color-surface);
   border: none;
   border-radius: 20px;
   padding: 10px 15px;
@@ -203,7 +238,7 @@ button {
 }
 
 button:hover {
-  background: var(--dark-yellow);
+  background: var(--color-warning-dark);
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -304,13 +339,14 @@ button:active {
   align-items: center;
   justify-content: space-between;
   padding: 0 8px;
-  background-color: var(--dark-blue);
+  background-color: var(--color-primary);
   border-radius: 24px;
-  color: var(--white);
+  color: var(--color-surface);
   font-size: 0.75em;
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.4s;
+  background-color: var(--color-primary);
 }
 
 /* Toggle Knob */
@@ -321,14 +357,14 @@ button:active {
   bottom: 3px;
   width: 18px;
   height: 18px;
-  background-color: var(--white);
+  background-color: var(--color-surface);
   border-radius: 50%;
   transition: transform 0.4s;
 }
 
 /* Toggle ON */
 input:checked + .slider {
-  background-color: var(--yellow);
+  background-color: var(--color-warning);
 }
 
 input:checked + .slider::before {
@@ -372,8 +408,8 @@ input:checked + .slider .off-text {
   display: inline-block;
   width: 18px;
   height: 18px;
-  background-color: var(--dark-blue);
-  color: var(--white);
+  background-color: var(--color-primary);
+  color: var(--color-surface);
   font-size: 1em;
   font-weight: bold;
   text-align: center;
@@ -382,24 +418,27 @@ input:checked + .slider .off-text {
   cursor: pointer;
   position: relative; 
   top: 2px; 
-  transition: transform 0.2s, box-shadow 0.2s;
   vertical-align: middle; 
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.tooltip-icon:hover {
+/* Hover & Focus Effects */
+.tooltip-icon:hover,
+.tooltip-icon:focus {
   transform: scale(1.1);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Tooltip Bubble */
-.tooltip-icon:hover::after {
+.tooltip-icon:hover::after,
+.tooltip-icon:focus::after {
   content: attr(data-tooltip);
   position: absolute;
   bottom: 125%;
   right: 0;
   transform: translateX(15%); 
-  background-color: var(--white);
-  color: var(--dark-blue);
+  background-color: var(--color-surface);
+  color: var(--color-primary);
   padding: 6px 10px;
   font-size: 0.7em;
   font-weight: 800;
@@ -410,34 +449,35 @@ input:checked + .slider .off-text {
 }
 
 /* Tooltip Arrow */
-.tooltip-icon:hover::before {
+.tooltip-icon:hover::before,
+.tooltip-icon:focus::before {
   content: "";
   position: absolute;
   bottom: 115%;
   left: 50%;
   transform: translateX(-50%);
   border: 6px solid transparent;
-  border-top-color: var(--yellow);
+  border-top-color: var(--color-warning);
   z-index: 10;
 }
 
-/* Focus styles for better keyboard navigation */
-button:focus, input:focus, .toggle-switch input:focus + .slider {
-  outline: 3px solid var(--yellow);
+/* ----------------------------------------------
+   Accessibility
+---------------------------------------------- */
+
+/* Reusable focus outline utility */
+.focus-outline {
+  outline: 3px solid var(--color-warning);
   outline-offset: 2px;
 }
 
-/* Focus styles for tooltip icons */
-.tooltip-icon:focus {
-  outline: 3px solid var(--yellow);
-  outline-offset: 2px;
-  transform: scale(1.1);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-/* Ensure toggle switches are focusable */
-.toggle-switch input:focus + .slider {
-  outline: 3px solid var(--yellow);
+/* Apply .focus-outline where needed */
+button:focus,
+input:focus,
+.tooltip-icon:focus,
+.toggle-switch input:focus + .slider,
+.focused {
+  outline: 3px solid var(--color-warning);
   outline-offset: 2px;
 }
 
@@ -451,10 +491,4 @@ button:focus, input:focus, .toggle-switch input:focus + .slider {
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   border: 0;
-}
-
-/* Focus indicator for keyboard navigation */
-.focused {
-  outline: 3px solid var(--yellow);
-  outline-offset: 2px;
 }
