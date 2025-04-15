@@ -420,3 +420,41 @@ input:checked + .slider .off-text {
   border-top-color: var(--yellow);
   z-index: 10;
 }
+
+/* Focus styles for better keyboard navigation */
+button:focus, input:focus, .toggle-switch input:focus + .slider {
+  outline: 3px solid var(--yellow);
+  outline-offset: 2px;
+}
+
+/* Focus styles for tooltip icons */
+.tooltip-icon:focus {
+  outline: 3px solid var(--yellow);
+  outline-offset: 2px;
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Ensure toggle switches are focusable */
+.toggle-switch input:focus + .slider {
+  outline: 3px solid var(--yellow);
+  outline-offset: 2px;
+}
+
+/* Visually hidden class for screen reader-only content */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* Focus indicator for keyboard navigation */
+.focused {
+  outline: 3px solid var(--yellow);
+  outline-offset: 2px;
+}

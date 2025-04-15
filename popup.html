@@ -3,93 +3,98 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WaterQuack</title>
+  <meta name="description" content="WaterQuack - A friendly Chrome extension that reminds you to stay hydrated with fun notifications and progress tracking.">
+  <meta name="keywords" content="hydration, water reminder, Chrome extension, health, productivity">
+  <meta name="author" content="WaterQuack Team - as known as Iasmin">
+  <title>WaterQuack - Stay Hydrated!</title>
   <!-- External stylesheet link -->
   <link rel="stylesheet" href="styles.css">
   <!-- External JavaScript file for popup functionality -->
   <script src="popup.js" defer></script>
 </head>
 <body>
-  <div class="container">
+  <main class="container">
     <!-- Section for title and cups drunk -->
-    <div class="rectangle">
+    <section class="rectangle">
       <header>
-        <img src="icon128.png" alt="Ducky" class="header-icon">
-        <h2>WaterQuack</h2>
+        <img src="icon128.png" alt="WaterQuack logo: A duck icon" class="header-icon" aria-hidden="true">
+        <h2 id="app-title">WaterQuack</h2>
       </header>
       <!-- Card for Cups -->
-      <div class="settings-card"> 
-        <section class="cups-section">
-          <h4>Cups Drunk Today: <span id="cupsToday">0</span></h4>
-          <div id="cupProgress" class="cup-progress"></div>
+      <article class="settings-card"> 
+        <section class="cups-section" aria-labelledby="cups-today-label">
+          <h4 id="cups-today-label">Cups Drunk Today: <span id="cupsToday" aria-live="polite">0</span></h4>
+          <div id="cupProgress" class="cup-progress" role="list"></div>
         </section>
+      </article>
+      <div class="cup-controls" role="group" aria-label="Cup controls"> 
+        <button id="addCup" aria-label="Add a cup of water" role="button" tabindex="0">Add Cup</button>
+        <button id="removeCup" aria-label="Remove a cup of water" role="button" tabindex="0">Remove Cup</button>
       </div>
-      <div class="cup-controls"> 
-        <button id="addCup">Add Cup</button>
-        <button id="removeCup">Remove Cup</button>
-      </div>
-    </div>
+    </section>
 
     <!-- Section for settings -->
-    <div class="rectangle">
+    <section class="rectangle">
       <h3>Settings</h3>
       <!-- Card for Daily Water Goal -->
-      <div class="settings-card">
-        <section class="goal-section">
-          <label for="goal">⚙️ Set your daily water goal (in cups):</label>
+      <article class="settings-card">
+        <section class="goal-section" aria-labelledby="goal-label">
+          <label id="goal-label" for="goal">⚙️ Set your daily water goal (in cups):</label>
           <div>
-            <input type="number" id="goal" min="1" max="30" placeholder="Default goal: 10 cups">
-            <button id="setGoal">Set</button>
+            <input type="number" id="goal" min="1" max="30" placeholder="Default goal: 10 cups" aria-describedby="goal-description" tabindex="0">
+            <button id="setGoal" aria-label="Set daily water goal" role="button" tabindex="0">Set</button>
           </div>
+          <p id="goal-description" class="visually-hidden">Enter a number between 1 and 30 to set your daily water goal.</p>
         </section>
         <p id="progress" style="display: none;"></p> <!-- Hidden element -->
-      </div>
+      </article>
 
       <!-- Card for Reminder Interval -->
-      <div class="settings-card">
-        <section class="reminder-section">
-          <label for="interval">⚙️ Set reminder interval (in minutes):</label>
+      <article class="settings-card">
+        <section class="reminder-section" aria-labelledby="interval-label">
+          <label id="interval-label" for="interval">⚙️ Set reminder interval (in minutes):</label>
           <div>
-            <input type="number" id="interval" min="1" placeholder="Default interval: 30 minutes">
-            <button id="setInterval">Set</button>
+            <input type="number" id="interval" min="1" placeholder="Default interval: 30 minutes" aria-describedby="interval-description" tabindex="0">
+            <button id="setInterval" aria-label="Set reminder interval" role="button" tabindex="0">Set</button>
           </div>
+          <p id="interval-description" class="visually-hidden">Enter a number between 1 and 1440 to set the reminder interval in minutes.</p>
         </section>
         <p id="status" style="display: none;"></p> <!-- Hidden element -->
-      </div>
+      </article>
 
       <!-- Card for Notification Toggles -->
-      <div class="settings-card">
-        <section class="notification-section">
-          <label for="notification-settings">⚙️ Notification preferences:</label>
+      <article class="settings-card">
+        <section class="notification-section" aria-labelledby="notification-settings-label">
+          <label id="notification-settings-label">⚙️ Notification preferences:</label>
           <div class="toggle-container">
-            <label class="toggle-switch">
-              <input type="checkbox" id="mute-notifications">
-              <span class="slider">
+            <label class="toggle-switch" for="mute-notifications">
+              <input type="checkbox" id="mute-notifications" aria-label="Mute notifications" tabindex="0">
+              <span class="slider" role="button">
                 <span class="on-text">ON</span>
                 <span class="off-text">OFF</span>
               </span>
             </label>
-            <label for="mute-notifications">Mute notifications</label>
-            <span class="tooltip-icon" data-tooltip="You'll still receive notifications, but silently.">?</span>
+            <label for="mute-notifications" tabindex="0">Mute notifications</label>
+            <span class="tooltip-icon" data-tooltip="You'll still receive notifications, but silently." aria-hidden="true" tabindex="0">?</span>
           </div>
           <div class="toggle-container">
-            <label class="toggle-switch">
-              <input type="checkbox" id="disable-notifications">
-              <span class="slider">
+            <label class="toggle-switch" for="disable-notifications">
+              <input type="checkbox" id="disable-notifications" aria-label="Disable notifications" tabindex="0">
+              <span class="slider" role="button">
                 <span class="on-text">ON</span>
                 <span class="off-text">OFF</span>
               </span>
             </label>
-            <label for="disable-notifications">Turn off notifications</label>
-            <span class="tooltip-icon" data-tooltip="Turns off all notifications completely.">?</span>
+            <label for="disable-notifications" tabindex="0">Turn off notifications</label>
+            <span class="tooltip-icon" data-tooltip="Turns off all notifications completely." aria-hidden="true" tabindex="0">?</span>
           </div>
         </section>
-      </div>
+      </article>
 
       <footer>
         <p>💧 Warning: Lack of hydration may cause dry humor! 💧</p>
       </footer>
-    </div>
-  </div>
+    </section>
+  </main>
 </body>
 </html>

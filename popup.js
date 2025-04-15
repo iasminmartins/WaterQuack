@@ -88,12 +88,16 @@ document.addEventListener("DOMContentLoaded", () => {
       const cups = dailyCups !== null ? dailyCups : data.dailyCups || 0;
 
       // Update the title with the number of cups drunk
-      document.getElementById("cupsToday").textContent = cups;
+      const cupsTodaySpan = document.getElementById("cupsToday");
+      cupsTodaySpan.textContent = cups;
 
       // Update the hidden progress display
       progressDiv.textContent = `Current goal: ${goal} cup(s).`;
 
       renderProgress(cups, goal, isCupAdded, isCupRemoved);
+
+      // Announce progress update for screen readers
+      cupsTodaySpan.setAttribute("aria-live", "polite");
     });
   }
 
@@ -257,4 +261,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initial progress update
   updateProgress();
+
+  // Close modals or popups with the Escape key
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      const activeElement = document.activeElement;
+      if (activeElement && activeElement.classList.contains("modal")) {
+        activeElement.style.display = "none"; // Hide the modal
+        activeElement.setAttribute("aria-hidden", "true");
+      }
+    }
+  });
+
+  // Ensure logical tab order and focus management
+  const focusableElements = document.querySelectorAll(
+    'button, [href], input, select, textarea, [tabindex="0"]'
+  );
+  focusableElements.forEach((element) => {
+    element.addEventListener("focus", () => {
+      element.classList.add("focused");
+    });
+    element.addEventListener("blur", () => {
+      element.classList.remove("focused");
+    });
+  });
 });
