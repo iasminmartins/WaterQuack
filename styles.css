@@ -194,19 +194,22 @@ footer p {
 ---------------------------------------------- */
 .goal-section,
 .reminder-section,
-.notification-section {
+.notification-section,
+.mode-section {
   display: flex;
   flex-direction: column; /* Stack elements vertically */
   gap: 10px;
   margin-bottom: 15px;
 }
 
-.notification-section {
+.notification-section,
+.mode-section {
   align-items: flex-start;
   margin-left: 10px;
 }
 
-.notification-section label {
+.notification-section label,
+.mode-section label {
   text-align: left;
 }
 
