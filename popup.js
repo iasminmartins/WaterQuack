@@ -94,6 +94,11 @@ document.addEventListener("DOMContentLoaded", () => {
       // Update the hidden progress display
       progressDiv.textContent = `Current goal: ${goal} cup(s).`;
 
+      // Update aria-valuenow and aria-valuemax for screen readers
+      const cupProgress = document.getElementById("cupProgress");
+      cupProgress.setAttribute("aria-valuenow", cups);
+      cupProgress.setAttribute("aria-valuemax", goal);
+
       renderProgress(cups, goal, isCupAdded, isCupRemoved);
 
       // Announce progress update for screen readers

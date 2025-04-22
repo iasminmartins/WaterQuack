@@ -24,26 +24,26 @@
       <!-- Card for Cups -->
       <article class="settings-card"> 
         <section class="cups-section" aria-labelledby="cups-today-label">
-          <h4 id="cups-today-label">Cups Drunk Today: <span id="cupsToday" aria-live="polite">0</span></h4>
-          <div id="cupProgress" class="cup-progress" role="list"></div>
+          <h3 id="cups-today-label">Cups Drunk Today: <span id="cupsToday" aria-live="polite">0</span></h3>
+          <div id="cupProgress" class="cup-progress" role="list" aria-valuenow="0" aria-valuemax="10"></div>
         </section>
       </article>
       <div class="cup-controls" role="group" aria-label="Cup controls"> 
-        <button id="addCup" aria-label="Add a cup of water" type="button" tabindex="0">Add Cup</button>
-        <button id="removeCup" aria-label="Remove a cup of water" type="button" tabindex="0">Remove Cup</button>
+        <button id="addCup" aria-label="Add a cup of water" type="button">Add Cup</button>
+        <button id="removeCup" aria-label="Remove a cup of water" type="button">Remove Cup</button>
       </div>
     </section>
 
     <!-- Section for settings -->
     <section class="rectangle">
-      <h3>Settings</h3>
+      <h3 class="heading--settings">Settings</h3>
       <!-- Card for Daily Water Goal -->
       <article class="settings-card">
         <section class="goal-section" aria-labelledby="goal-label">
-          <label id="goal-label" for="goal">⚙️ Set your daily water goal (in cups):</label>
+          <label id="goal-label" for="goal"><span aria-hidden="true">⚙️</span> Set your daily water goal (in cups):</label>
           <div>
-            <input type="number" id="goal" min="1" max="30" placeholder="Current goal: 10 cups" aria-describedby="goal-description" tabindex="0">
-            <button id="setGoal" aria-label="Set daily water goal" type="button" tabindex="0">Set</button>
+            <input type="number" id="goal" min="1" max="30" placeholder="Current goal: 10 cups" aria-describedby="goal-description">
+            <button id="setGoal" aria-label="Set daily water goal" type="button">Set</button>
           </div>
           <p id="goal-description" class="visually-hidden">Enter a number between 1 and 30 to set your daily water goal.</p>
         </section>
@@ -53,10 +53,10 @@
       <!-- Card for Reminder Interval -->
       <article class="settings-card">
         <section class="reminder-section" aria-labelledby="interval-label">
-          <label id="interval-label" for="interval">⚙️ Set reminder interval (in minutes):</label>
+          <label id="interval-label" for="interval"><span aria-hidden="true">⚙️</span> Set reminder interval (in minutes):</label>
           <div>
-            <input type="number" id="interval" min="1" placeholder="Current interval: 30 minutes" aria-describedby="interval-description" tabindex="0">
-            <button id="setInterval" aria-label="Set reminder interval" type="button" tabindex="0">Set</button>
+            <input type="number" id="interval" min="1" placeholder="Current interval: 30 minutes" aria-describedby="interval-description">
+            <button id="setInterval" aria-label="Set reminder interval" type="button">Set</button>
           </div>
           <p id="interval-description" class="visually-hidden">Enter a number between 1 and 1440 to set the reminder interval in minutes.</p>
         </section>
@@ -66,28 +66,30 @@
       <!-- Card for Notification Toggles -->
       <article class="settings-card">
         <section class="notification-section" aria-labelledby="notification-settings-label">
-          <label id="notification-settings-label">⚙️ Notification preferences:</label>
+          <label id="notification-settings-label"><span aria-hidden="true">⚙️</span> Notification preferences:</label>
           <div class="toggle-container">
             <label class="toggle-switch" for="mute-notifications">
-              <input type="checkbox" id="mute-notifications" aria-label="Mute notifications" tabindex="0">
+              <input type="checkbox" id="mute-notifications" aria-label="Mute notifications">
               <span class="slider" role="button">
                 <span class="on-text">ON</span>
                 <span class="off-text">OFF</span>
               </span>
             </label>
-            <label for="mute-notifications" tabindex="0">Mute notifications</label>
-            <span class="tooltip-icon" data-tooltip="You'll still receive notifications, but silently." aria-hidden="true" tabindex="0">?</span>
+            <label for="mute-notifications">Mute notifications</label>
+            <span class="tooltip-icon" data-tooltip="You'll still receive notifications, but silently." aria-hidden="true" tabindex="0" aria-describedby="mute-tooltip">?</span>
+            <span id="mute-tooltip" class="visually-hidden">You'll still receive notifications, but silently.</span>
           </div>
           <div class="toggle-container">
             <label class="toggle-switch" for="disable-notifications">
-              <input type="checkbox" id="disable-notifications" aria-label="Disable notifications" tabindex="0">
+              <input type="checkbox" id="disable-notifications" aria-label="Disable notifications">
               <span class="slider" role="button">
                 <span class="on-text">ON</span>
                 <span class="off-text">OFF</span>
               </span>
             </label>
-            <label for="disable-notifications" tabindex="0">Turn off notifications</label>
-            <span class="tooltip-icon" data-tooltip="Turns off all notifications completely." aria-hidden="true" tabindex="0">?</span>
+            <label for="disable-notifications">Turn off notifications</label>
+            <span class="tooltip-icon" data-tooltip="Turns off all notifications completely." aria-hidden="true" tabindex="0" aria-describedby="disable-tooltip">?</span>
+            <span id="disable-tooltip" class="visually-hidden">Turns off all notifications completely.</span>
           </div>
         </section>
       </article>
@@ -95,17 +97,17 @@
       <!-- Mode Toggle Buttons -->
       <article class="settings-card">
         <section class="mode-section" aria-labelledby="mode-label">
-          <label id="mode-label">⚙️ Choose your pond look:</label>
+          <label id="mode-label"><span aria-hidden="true">⚙️</span> Choose your pond look:</label>
           <div class="mode-controls">
-            <button id="lightMode" aria-label="Switch to light mode" type="button" tabindex="0">Sunny Splash</button>
-            <button id="darkMode" aria-label="Switch to dark mode" type="button" tabindex="0">Twilight Pond</button>
-            <button id="colorblindMode" aria-label="Switch to colorblind-friendly mode" type="button" tabindex="0">Friendly Quack</button>
+            <button id="lightMode" aria-label="Switch to light mode" type="button">Sunny Splash</button>
+            <button id="darkMode" aria-label="Switch to dark mode" type="button">Twilight Pond</button>
+            <button id="colorblindMode" aria-label="Switch to colorblind-friendly mode" type="button">Friendly Quack</button>
           </div>
         </section>
       </article>
 
       <footer>
-        <p>💧 Stay hydrated and keep the jokes afloat! 💧</p>
+        <p><span aria-hidden="true">💧</span> Stay hydrated and keep the jokes afloat! <span aria-hidden="true">💧</span></p>
       </footer>
     </section>
   </main>
