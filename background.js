@@ -2,6 +2,7 @@
 const motivationalMessages = [
     "Every drop counts! Stay hydrated.",
     "You're on the right track! Keep drinking water.",
+    "Warning: Lack of hydration may cause dry humor!",
     "Don't be a dry duck. Take a sip!",
     "If ducks could talk like me, they'd say 'Drink up that water, human!'",
     "Hydration is key to energy. Don't stop now!",
