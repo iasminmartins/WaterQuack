@@ -342,4 +342,22 @@ document.addEventListener("DOMContentLoaded", () => {
       updateThemeColor("#0066cc"); // Default to light mode theme color
     }
   });
+
+  // Footer message rotation
+  const footerMessages = [
+    "Stay hydrated and keep the jokes afloat!",
+    "You’re 70% water… act like it!",
+    "Warning: Dehydration may cause duckface!",
+    "Ducks drink water, so should you!",
+    "Warning: Lack of hydration may cause dry humor!"
+  ];
+  const footerElement = document.querySelector("footer p");
+  let currentMessageIndex = 0;
+
+  function rotateFooterMessage() {
+    currentMessageIndex = (currentMessageIndex + 1) % footerMessages.length;
+    footerElement.innerHTML = `<span aria-hidden="true">💧</span> ${footerMessages[currentMessageIndex]} <span aria-hidden="true">💧</span>`;
+  }
+
+  setInterval(rotateFooterMessage, 30 * 60 * 1000); // Rotate every 30 minutes
 });
