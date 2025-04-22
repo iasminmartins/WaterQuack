@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="WaterQuack - A friendly Chrome extension that reminds you to stay hydrated with fun notifications and progress tracking.">
-  <meta name="keywords" content="hydration, water reminder, Chrome extension, health, productivity">
-  <meta name="author" content="WaterQuack Team - as known as Iasmin">
+  <meta name="keywords" content="hydration, water reminder, Chrome extension, health, productivity, duck">
+  <meta name="author" content="Iasmin Martins Cintra">
   <title>WaterQuack - Stay Hydrated!</title>
   <!-- External stylesheet link -->
   <link rel="stylesheet" href="styles.css">
@@ -28,8 +28,8 @@
         </section>
       </article>
       <div class="cup-controls" role="group" aria-label="Cup controls"> 
-        <button id="addCup" aria-label="Add a cup of water" role="button" tabindex="0">Add Cup</button>
-        <button id="removeCup" aria-label="Remove a cup of water" role="button" tabindex="0">Remove Cup</button>
+        <button id="addCup" aria-label="Add a cup of water" type="button" tabindex="0">Add Cup</button>
+        <button id="removeCup" aria-label="Remove a cup of water" type="button" tabindex="0">Remove Cup</button>
       </div>
     </section>
 
@@ -42,11 +42,11 @@
           <label id="goal-label" for="goal">⚙️ Set your daily water goal (in cups):</label>
           <div>
             <input type="number" id="goal" min="1" max="30" placeholder="Current goal: 10 cups" aria-describedby="goal-description" tabindex="0">
-            <button id="setGoal" aria-label="Set daily water goal" role="button" tabindex="0">Set</button>
+            <button id="setGoal" aria-label="Set daily water goal" type="button" tabindex="0">Set</button>
           </div>
           <p id="goal-description" class="visually-hidden">Enter a number between 1 and 30 to set your daily water goal.</p>
         </section>
-        <p id="progress" style="display: none;"></p> <!-- Hidden element -->
+        <p id="progress" class="hidden"></p> <!-- Hidden element -->
       </article>
 
       <!-- Card for Reminder Interval -->
@@ -55,11 +55,11 @@
           <label id="interval-label" for="interval">⚙️ Set reminder interval (in minutes):</label>
           <div>
             <input type="number" id="interval" min="1" placeholder="Current interval: 30 minutes" aria-describedby="interval-description" tabindex="0">
-            <button id="setInterval" aria-label="Set reminder interval" role="button" tabindex="0">Set</button>
+            <button id="setInterval" aria-label="Set reminder interval" type="button" tabindex="0">Set</button>
           </div>
           <p id="interval-description" class="visually-hidden">Enter a number between 1 and 1440 to set the reminder interval in minutes.</p>
         </section>
-        <p id="status" style="display: none;"></p> <!-- Hidden element -->
+        <p id="status" class="hidden"></p> <!-- Hidden element -->
       </article>
 
       <!-- Card for Notification Toggles -->
@@ -96,9 +96,9 @@
         <section class="mode-section" aria-labelledby="mode-label">
           <label id="mode-label">⚙️ Choose your pond look:</label>
           <div class="mode-controls">
-            <button id="lightMode" aria-label="Switch to light mode" tabindex="0">Sunny Splash</button>
-            <button id="darkMode" aria-label="Switch to dark mode" tabindex="0">Twilight Pond</button>
-            <button id="colorblindMode" aria-label="Switch to colorblind-friendly mode" tabindex="0">Friendly Quack</button>
+            <button id="lightMode" aria-label="Switch to light mode" type="button" tabindex="0">Sunny Splash</button>
+            <button id="darkMode" aria-label="Switch to dark mode" type="button" tabindex="0">Twilight Pond</button>
+            <button id="colorblindMode" aria-label="Switch to colorblind-friendly mode" type="button" tabindex="0">Friendly Quack</button>
           </div>
         </section>
       </article>

@@ -496,3 +496,8 @@ input:focus,
   clip: rect(0, 0, 0, 0);
   border: 0;
 }
+
+/* Utility class for hidden elements */
+.hidden {
+  display: none;
+}
