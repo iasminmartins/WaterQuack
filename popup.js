@@ -1,4 +1,11 @@
-let goalAchievedOnce = false;
+let state = {}; // Global state object
+
+const config = {
+  maxCups: 30,
+  minCups: 1,
+  maxInterval: 1440,
+  minInterval: 1,
+}; // Centralized configuration object
 
 document.addEventListener("DOMContentLoaded", async () => {
   // Helper functions for chrome.storage.sync
@@ -8,6 +15,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   function setStorage(data) {
     return new Promise((resolve) => chrome.storage.sync.set(data, resolve));
+  }
+
+  async function updateStorage(updates) {
+    Object.assign(state, updates); // Update in-memory state
+    await setStorage(updates); // Persist to chrome.storage.sync
   }
 
   // Cache DOM elements in a centralized object
@@ -43,11 +55,22 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  // Initialize default interval if not set
-  const { interval } = await getStorage("interval");
-  if (interval === undefined) {
-    await setStorage({ interval: 30 }); // Default to 30 minutes
-  }
+  // Hydrate global state from chrome.storage.sync
+  state = await getStorage(["interval", "dailyCups", "dailyGoal", "notificationsMuted", "notificationsDisabled", "goalAchievedOnce", "mode"]);
+  state.interval = state.interval ?? 30; // Default interval
+  state.dailyCups = state.dailyCups ?? 0; // Default daily cups
+  state.dailyGoal = state.dailyGoal ?? 10; // Default daily goal
+  state.notificationsMuted = state.notificationsMuted ?? false;
+  state.notificationsDisabled = state.notificationsDisabled ?? false;
+  state.goalAchievedOnce = state.goalAchievedOnce ?? false;
+
+  // Initialize placeholders for goal and interval inputs
+  elements.goalInput.placeholder = `Current goal: ${state.dailyGoal} cup(s)`;
+  elements.intervalInput.placeholder = `Current interval: ${state.interval} minute(s)`;
+
+  // Initialize mute and disable notifications checkboxes
+  elements.muteNotificationsCheckbox.checked = state.notificationsMuted;
+  elements.disableNotificationsCheckbox.checked = state.notificationsDisabled;
 
   // Validate and sanitize numeric input
   function validateNumberInput(value, min, max) {
@@ -58,6 +81,41 @@ document.addEventListener("DOMContentLoaded", async () => {
     return number;
   }
 
+  // Helper function to disable a button temporarily
+  async function withButtonDisabled(button, asyncTask) {
+    button.disabled = true;
+    try {
+      await asyncTask();
+    } finally {
+      button.disabled = false;
+    }
+  }
+
+  // Consolidated function to handle cup count increment and goal checking
+  async function incrementCupCount(isAdding) {
+    const newDailyCups = isAdding
+      ? state.dailyCups + 1
+      : Math.max(config.minCups - 1, state.dailyCups - 1);
+
+    if (newDailyCups > config.maxCups) {
+      alert(`⚠️ Drinking too much water may not be healthy. Limit of ${config.maxCups} cups reached!`);
+      return;
+    }
+
+    let newGoalAchievedOnce = state.goalAchievedOnce;
+    if (newDailyCups < state.dailyGoal) {
+      newGoalAchievedOnce = false;
+    }
+
+    await updateStorage({ dailyCups: newDailyCups, goalAchievedOnce: newGoalAchievedOnce });
+
+    if (isAdding) {
+      await checkGoalAchieved(newDailyCups, state.dailyGoal, state.goalAchievedOnce);
+    }
+
+    updateProgress(newDailyCups, state.dailyGoal, isAdding, !isAdding);
+  }
+
   // Function to check if the goal is achieved
   async function checkGoalAchieved(dailyCups, dailyGoal, goalAchievedOnce) {
     if (dailyCups >= dailyGoal && !goalAchievedOnce) {
@@ -66,45 +124,46 @@ document.addEventListener("DOMContentLoaded", async () => {
         action: "goalAchieved",
         message: `You've reached your goal of ${dailyGoal} cups. Congratu-ducking-lations! 💧`,
       });
-      await setStorage({ goalAchievedOnce: true });
+      await updateStorage({ goalAchievedOnce: true });
       return true;
     }
     return false;
   }
 
   // Handle setting reminder interval
-  elements.setIntervalButton.addEventListener("click", async () => {
-    const interval = validateNumberInput(elements.intervalInput.value, 1, 1440);
-    if (interval !== null) {
-      await setStorage({ interval });
-      elements.status.textContent = `Current interval: ${interval} minute(s).`; // Update hidden status element
-      chrome.runtime.sendMessage({ action: "updateReminder", interval });
-      alert("Reminder interval set successfully!"); // Notify user
-    } else {
-      alert("The reminder interval must be a valid number between 1 and 1440 minutes.");
-    }
+  elements.setIntervalButton.addEventListener("click", () => {
+    withButtonDisabled(elements.setIntervalButton, async () => {
+      const interval = validateNumberInput(elements.intervalInput.value, config.minInterval, config.maxInterval);
+      if (interval !== null) {
+        await updateStorage({ interval });
+        elements.status.textContent = `Current interval: ${interval} minute(s).`; // Update hidden status element
+        chrome.runtime.sendMessage({ action: "updateReminder", interval });
+        alert("Reminder interval set successfully!"); // Notify user
+      } else {
+        alert(`The reminder interval must be a valid number between ${config.minInterval} and ${config.maxInterval} minutes.`);
+      }
+    });
   });
 
   // Handle setting daily goal
-  elements.setGoalButton.addEventListener("click", async () => {
-    const goal = validateNumberInput(elements.goalInput.value, 1, 30);
-    if (goal !== null) {
-      const { dailyCups = 0 } = await getStorage("dailyCups");
-
-      await setStorage({ dailyGoal: goal, goalAchievedOnce: false });
-      await checkGoalAchieved(dailyCups, goal, false); // Reuse the function here
-      updateProgress();
-      alert("Daily goal set successfully!"); // Notify user
-    } else {
-      alert("The daily goal must be a valid number between 1 and 30 cups.");
-    }
+  elements.setGoalButton.addEventListener("click", () => {
+    withButtonDisabled(elements.setGoalButton, async () => {
+      const goal = validateNumberInput(elements.goalInput.value, config.minCups, config.maxCups);
+      if (goal !== null) {
+        await updateStorage({ dailyGoal: goal, goalAchievedOnce: false });
+        await checkGoalAchieved(state.dailyCups, goal, false); // Reuse the function here
+        updateProgress();
+        alert("Daily goal set successfully!"); // Notify user
+      } else {
+        alert(`The daily goal must be a valid number between ${config.minCups} and ${config.maxCups} cups.`);
+      }
+    });
   });
 
   // Update progress display and notify when goal is reached
   async function updateProgress(dailyCups = null, dailyGoal = null, isCupAdded = false, isCupRemoved = false) {
-    const { dailyGoal: storedGoal = 10, dailyCups: storedCups = 0 } = await getStorage(["dailyGoal", "dailyCups"]);
-    const goal = dailyGoal || storedGoal;
-    const cups = dailyCups !== null ? dailyCups : storedCups;
+    const goal = dailyGoal || state.dailyGoal;
+    const cups = dailyCups !== null ? dailyCups : state.dailyCups;
 
     // Update the title with the number of cups drunk
     elements.cupsTodaySpan.textContent = cups;
@@ -124,8 +183,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Function to play the "quack.mp3" sound
   async function playQuackSound() {
-    const { notificationsMuted } = await getStorage("notificationsMuted");
-    if (!notificationsMuted) {
+    if (!state.notificationsMuted) {
       const audio = new Audio("quack.mp3");
       audio.play().catch((error) => {
         console.error("Failed to play sound:", error);
@@ -134,31 +192,17 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   // Add a cup to the tally
-  elements.addCupButton.addEventListener("click", async () => {
-    const { dailyCups = 0, dailyGoal = 10, goalAchievedOnce = false } = await getStorage(["dailyCups", "dailyGoal", "goalAchievedOnce"]);
-    const newDailyCups = dailyCups + 1;
-
-    if (newDailyCups > 30) {
-      alert("⚠️ Drinking too much water may not be healthy. Limit reached!");
-      return;
-    }
-
-    let newGoalAchievedOnce = goalAchievedOnce;
-    if (newDailyCups < dailyGoal) {
-      newGoalAchievedOnce = false;
-    }
-
-    await setStorage({ dailyCups: newDailyCups, goalAchievedOnce: newGoalAchievedOnce });
-    await checkGoalAchieved(newDailyCups, dailyGoal, goalAchievedOnce); // Reuse the function here
-    updateProgress(newDailyCups, dailyGoal, true);
+  elements.addCupButton.addEventListener("click", () => {
+    withButtonDisabled(elements.addCupButton, async () => {
+      await incrementCupCount(true);
+    });
   });
 
   // Remove a cup from the tally
-  elements.removeCupButton.addEventListener("click", async () => {
-    const { dailyCups = 0 } = await getStorage("dailyCups");
-    const newDailyCups = Math.max(0, dailyCups - 1);
-    await setStorage({ dailyCups: newDailyCups, goalAchievedOnce: false });
-    updateProgress(newDailyCups, null, false, true);
+  elements.removeCupButton.addEventListener("click", () => {
+    withButtonDisabled(elements.removeCupButton, async () => {
+      await incrementCupCount(false);
+    });
   });
 
   // Render the cup progress bar
@@ -202,26 +246,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Mute/unmute notifications
   elements.muteNotificationsCheckbox.addEventListener("change", async (event) => {
-    await setStorage({ notificationsMuted: event.target.checked });
+    await updateStorage({ notificationsMuted: event.target.checked });
   });
-
-  // Initialize mute notifications state
-  const { notificationsMuted } = await getStorage("notificationsMuted");
-  elements.muteNotificationsCheckbox.checked = !!notificationsMuted;
 
   // Disable/enable notifications
   elements.disableNotificationsCheckbox.addEventListener("change", async (event) => {
-    await setStorage({ notificationsDisabled: event.target.checked });
+    await updateStorage({ notificationsDisabled: event.target.checked });
   });
-
-  // Initialize disable notifications state
-  const { notificationsDisabled } = await getStorage("notificationsDisabled");
-  elements.disableNotificationsCheckbox.checked = !!notificationsDisabled;
 
   // Show notification if not muted or disabled
   async function showNotification(title, message) {
-    const { notificationsMuted, notificationsDisabled } = await getStorage(["notificationsMuted", "notificationsDisabled"]);
-    if (!notificationsMuted && !notificationsDisabled) {
+    if (!state.notificationsMuted && !state.notificationsDisabled) {
       chrome.notifications.create({
         type: "basic",
         iconUrl: "icon48.png",
@@ -231,42 +266,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       });
     }
   }
-
-  // Initialize placeholders for goal and interval inputs
-  const { dailyGoal = 10, interval: storedInterval = 30 } = await getStorage(["dailyGoal", "interval"]);
-  if (elements.goalInput) {
-    elements.goalInput.placeholder = `Current goal: ${dailyGoal} cup(s)`;
-  }
-  if (elements.intervalInput) {
-    elements.intervalInput.placeholder = `Current interval: ${storedInterval} minute(s)`;
-  }
-
-  // Initial progress update
-  updateProgress();
-
-  // Close modals or popups with the Escape key
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
-      const activeElement = document.activeElement;
-      if (activeElement && activeElement.classList.contains("modal")) {
-        activeElement.style.display = "none"; // Hide the modal
-        activeElement.setAttribute("aria-hidden", "true");
-      }
-    }
-  });
-
-  // Ensure logical tab order and focus management
-  const focusableElements = document.querySelectorAll(
-    'button, [href], input, select, textarea, [tabindex="0"]'
-  );
-  focusableElements.forEach((element) => {
-    element.addEventListener("focus", () => {
-      element.classList.add("focused");
-    });
-    element.addEventListener("blur", () => {
-      element.classList.remove("focused");
-    });
-  });
 
   // Function to update the theme-color meta tag
   function updateThemeColor(color) {
@@ -301,11 +300,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   // Load saved mode from storage and update theme color
-  const { mode } = await getStorage("mode");
-  if (mode === "dark") {
+  if (state.mode === "dark") {
     document.documentElement.classList.add("dark-mode");
     updateThemeColor("#1e1e2f");
-  } else if (mode === "colorblind") {
+  } else if (state.mode === "colorblind") {
     document.documentElement.classList.add("colorblind-mode");
     updateThemeColor("#0072B2");
   } else {
@@ -328,4 +326,31 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   setInterval(rotateFooterMessage, 30 * 60 * 1000); // Rotate every 30 minutes
+
+  // Initial progress update
+  updateProgress();
+
+  // Close modals or popups with the Escape key
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      const activeElement = document.activeElement;
+      if (activeElement && activeElement.classList.contains("modal")) {
+        activeElement.style.display = "none"; // Hide the modal
+        activeElement.setAttribute("aria-hidden", "true");
+      }
+    }
+  });
+
+  // Ensure logical tab order and focus management
+  const focusableElements = document.querySelectorAll(
+    'button, [href], input, select, textarea, [tabindex="0"]'
+  );
+  focusableElements.forEach((element) => {
+    element.addEventListener("focus", () => {
+      element.classList.add("focused");
+    });
+    element.addEventListener("blur", () => {
+      element.classList.remove("focused");
+    });
+  });
 });
