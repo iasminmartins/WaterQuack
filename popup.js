@@ -124,6 +124,25 @@ document.addEventListener("DOMContentLoaded", async () => {
         action: "goalAchieved",
         message: `You've reached your goal of ${dailyGoal} cups. Congratu-ducking-lations! 💧`,
       });
+
+      // Add falling confetti animation
+      const confettiContainer = document.createElement("div");
+      confettiContainer.classList.add("confetti-animation");
+      const emojis = ["✨", "💦", "💧", "🎉"];
+      for (let i = 0; i < 50; i++) { // Create 50 falling emojis
+        const span = document.createElement("span");
+        span.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        span.style.left = `${Math.random() * 100}%`; // Random horizontal position
+        span.style.animationDelay = `${Math.random() * 2}s`; // Random delay
+        confettiContainer.appendChild(span);
+      }
+      document.body.appendChild(confettiContainer);
+
+      // Remove the animation after it completes
+      setTimeout(() => {
+        confettiContainer.remove();
+      }, 3000);
+
       await updateStorage({ goalAchievedOnce: true });
       return true;
     }
@@ -239,7 +258,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (dailyCups > dailyGoal) {
       const extra = document.createElement("div");
       extra.textContent = "💧";
-      extra.classList.add("extra");
+      extra.classList.add("extra-indicator");
       elements.cupProgress.appendChild(extra);
     }
   }
