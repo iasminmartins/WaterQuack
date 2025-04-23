@@ -1,22 +1,34 @@
 let goalAchievedOnce = false;
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Cache DOM elements
-  const setIntervalButton = document.getElementById("setInterval");
-  const setGoalButton = document.getElementById("setGoal");
-  const addCupButton = document.getElementById("addCup");
-  const removeCupButton = document.getElementById("removeCup");
-  const cupsTodaySpan = document.getElementById("cupsToday");
-  const progressDiv = document.getElementById("progress");
+  // Cache DOM elements in a centralized object
+  const elements = {
+    setIntervalButton: document.getElementById("setInterval"),
+    setGoalButton: document.getElementById("setGoal"),
+    addCupButton: document.getElementById("addCup"),
+    removeCupButton: document.getElementById("removeCup"),
+    cupsTodaySpan: document.getElementById("cupsToday"),
+    progressDiv: document.getElementById("progress"),
+    intervalInput: document.getElementById("interval"),
+    goalInput: document.getElementById("goal"),
+    status: document.getElementById("status"),
+    cupProgress: document.getElementById("cupProgress"),
+    muteNotificationsCheckbox: document.getElementById("mute-notifications"),
+    disableNotificationsCheckbox: document.getElementById("disable-notifications"),
+    lightModeButton: document.getElementById("lightMode"),
+    darkModeButton: document.getElementById("darkMode"),
+    colorblindModeButton: document.getElementById("colorblindMode"),
+    footerElement: document.querySelector("footer p"),
+  };
 
   // Ensure all required elements exist
   if (
-    !setIntervalButton ||
-    !setGoalButton ||
-    !addCupButton ||
-    !removeCupButton ||
-    !cupsTodaySpan ||
-    !progressDiv
+    !elements.setIntervalButton ||
+    !elements.setGoalButton ||
+    !elements.addCupButton ||
+    !elements.removeCupButton ||
+    !elements.cupsTodaySpan ||
+    !elements.progressDiv
   ) {
     alert("Error: One or more elements were not found in the DOM.");
     return;
@@ -39,12 +51,11 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Handle setting reminder interval
-  setIntervalButton.addEventListener("click", () => {
-    const interval = validateNumberInput(document.getElementById("interval").value, 1, 1440);
+  elements.setIntervalButton.addEventListener("click", () => {
+    const interval = validateNumberInput(elements.intervalInput.value, 1, 1440);
     if (interval !== null) {
       chrome.storage.sync.set({ interval }, () => {
-        document.getElementById("status").textContent =
-          `Current interval: ${interval} minute(s).`; // Update hidden status element
+        elements.status.textContent = `Current interval: ${interval} minute(s).`; // Update hidden status element
         chrome.runtime.sendMessage({ action: "updateReminder", interval });
         alert("Reminder interval set successfully!"); // Notify user
       });
@@ -54,8 +65,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Handle setting daily goal
-  setGoalButton.addEventListener("click", () => {
-    const goal = validateNumberInput(document.getElementById("goal").value, 1, 30);
+  elements.setGoalButton.addEventListener("click", () => {
+    const goal = validateNumberInput(elements.goalInput.value, 1, 30);
     if (goal !== null) {
       chrome.storage.sync.get(["dailyCups"], (data) => {
         const dailyCups = data.dailyCups || 0;
@@ -88,21 +99,19 @@ document.addEventListener("DOMContentLoaded", () => {
       const cups = dailyCups !== null ? dailyCups : data.dailyCups || 0;
 
       // Update the title with the number of cups drunk
-      const cupsTodaySpan = document.getElementById("cupsToday");
-      cupsTodaySpan.textContent = cups;
+      elements.cupsTodaySpan.textContent = cups;
 
       // Update the hidden progress display
-      progressDiv.textContent = `Current goal: ${goal} cup(s).`;
+      elements.progressDiv.textContent = `Current goal: ${goal} cup(s).`;
 
       // Update aria-valuenow and aria-valuemax for screen readers
-      const cupProgress = document.getElementById("cupProgress");
-      cupProgress.setAttribute("aria-valuenow", cups);
-      cupProgress.setAttribute("aria-valuemax", goal);
+      elements.cupProgress.setAttribute("aria-valuenow", cups);
+      elements.cupProgress.setAttribute("aria-valuemax", goal);
 
       renderProgress(cups, goal, isCupAdded, isCupRemoved);
 
       // Announce progress update for screen readers
-      cupsTodaySpan.setAttribute("aria-live", "polite");
+      elements.cupsTodaySpan.setAttribute("aria-live", "polite");
     });
   }
 
@@ -119,7 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Add a cup to the tally
-  addCupButton.addEventListener("click", () => {
+  elements.addCupButton.addEventListener("click", () => {
     chrome.storage.sync.get(
       ["dailyCups", "dailyGoal", "goalAchievedOnce"],
       (data) => {
@@ -158,7 +167,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Remove a cup from the tally
-  removeCupButton.addEventListener("click", () => {
+  elements.removeCupButton.addEventListener("click", () => {
     chrome.storage.sync.get(["dailyCups"], (data) => {
       const dailyCups = Math.max(0, (data.dailyCups || 0) - 1);
       chrome.storage.sync.set(
@@ -170,8 +179,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Render the cup progress bar
   function renderProgress(dailyCups, dailyGoal, isCupAdded = false, isCupRemoved = false) {
-    const cupProgress = document.getElementById("cupProgress");
-    cupProgress.innerHTML = "";
+    elements.cupProgress.innerHTML = "";
 
     const cupsPerRow = Math.ceil(Math.sqrt(dailyGoal)); // Calculate cups per row dynamically
     for (let i = 0; i < dailyGoal; i++) {
@@ -190,13 +198,13 @@ document.addEventListener("DOMContentLoaded", () => {
           setTimeout(() => cup.classList.remove("removed"), 500); // Remove animation class after it completes
         }
       }
-      cupProgress.appendChild(cup);
+      elements.cupProgress.appendChild(cup);
 
       // Add a row break after every `cupsPerRow` cups
       if ((i + 1) % cupsPerRow === 0) {
         const rowBreak = document.createElement("div");
         rowBreak.classList.add("row-break");
-        cupProgress.appendChild(rowBreak);
+        elements.cupProgress.appendChild(rowBreak);
       }
     }
 
@@ -204,36 +212,30 @@ document.addEventListener("DOMContentLoaded", () => {
       const extra = document.createElement("div");
       extra.textContent = "💧";
       extra.classList.add("extra");
-      cupProgress.appendChild(extra);
+      elements.cupProgress.appendChild(extra);
     }
   }
 
   // Mute/unmute notifications
-  document
-    .getElementById("mute-notifications")
-    .addEventListener("change", (event) => {
-      const muted = event.target.checked;
-      chrome.storage.sync.set({ notificationsMuted: muted });
-    });
+  elements.muteNotificationsCheckbox.addEventListener("change", (event) => {
+    const muted = event.target.checked;
+    chrome.storage.sync.set({ notificationsMuted: muted });
+  });
 
   // Initialize mute notifications state
   chrome.storage.sync.get("notificationsMuted", (data) => {
-    const muteCheckbox = document.getElementById("mute-notifications");
-    muteCheckbox.checked = !!data.notificationsMuted;
+    elements.muteNotificationsCheckbox.checked = !!data.notificationsMuted;
   });
 
   // Disable/enable notifications
-  document
-    .getElementById("disable-notifications")
-    .addEventListener("change", (event) => {
-      const disabled = event.target.checked;
-      chrome.storage.sync.set({ notificationsDisabled: disabled });
-    });
+  elements.disableNotificationsCheckbox.addEventListener("change", (event) => {
+    const disabled = event.target.checked;
+    chrome.storage.sync.set({ notificationsDisabled: disabled });
+  });
 
   // Initialize disable notifications state
   chrome.storage.sync.get("notificationsDisabled", (data) => {
-    const disableCheckbox = document.getElementById("disable-notifications");
-    disableCheckbox.checked = !!data.notificationsDisabled;
+    elements.disableNotificationsCheckbox.checked = !!data.notificationsDisabled;
   });
 
   // Show notification if not muted or disabled
@@ -253,14 +255,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initialize placeholders for goal and interval inputs
   chrome.storage.sync.get(["dailyGoal", "interval"], (data) => {
-    const goalInput = document.getElementById("goal");
-    const intervalInput = document.getElementById("interval");
-
-    if (goalInput) {
-      goalInput.placeholder = `Current goal: ${data.dailyGoal || 10} cup(s)`;
+    if (elements.goalInput) {
+      elements.goalInput.placeholder = `Current goal: ${data.dailyGoal || 10} cup(s)`;
     }
-    if (intervalInput) {
-      intervalInput.placeholder = `Current interval: ${data.interval || 30} minute(s)`;
+    if (elements.intervalInput) {
+      elements.intervalInput.placeholder = `Current interval: ${data.interval || 30} minute(s)`;
     }
   });
 
@@ -303,27 +302,20 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Mode toggle buttons
-  const lightModeButton = document.getElementById("lightMode");
-  const darkModeButton = document.getElementById("darkMode");
-  const colorblindModeButton = document.getElementById("colorblindMode");
-
-  // Apply light mode
-  lightModeButton.addEventListener("click", () => {
+  elements.lightModeButton.addEventListener("click", () => {
     document.documentElement.classList.remove("dark-mode", "colorblind-mode");
     chrome.storage.sync.set({ mode: "light" });
     updateThemeColor("#0066cc"); // Light mode theme color
   });
 
-  // Apply dark mode
-  darkModeButton.addEventListener("click", () => {
+  elements.darkModeButton.addEventListener("click", () => {
     document.documentElement.classList.add("dark-mode");
     document.documentElement.classList.remove("colorblind-mode");
     chrome.storage.sync.set({ mode: "dark" });
     updateThemeColor("#1e1e2f"); // Dark mode theme color
   });
 
-  // Apply colorblind mode
-  colorblindModeButton.addEventListener("click", () => {
+  elements.colorblindModeButton.addEventListener("click", () => {
     document.documentElement.classList.add("colorblind-mode");
     document.documentElement.classList.remove("dark-mode");
     chrome.storage.sync.set({ mode: "colorblind" });
@@ -346,17 +338,16 @@ document.addEventListener("DOMContentLoaded", () => {
   // Footer message rotation
   const footerMessages = [
     "Stay hydrated and keep the jokes afloat!",
-    "You’re 70% water… act like it!",
+    "You're 70% water… act like it!",
     "Warning: Dehydration may cause duckface!",
     "Ducks drink water, so should you!",
-    "Warning: Lack of hydration may cause dry humor!"
+    "Warning: Lack of hydration may cause dry humor!",
   ];
-  const footerElement = document.querySelector("footer p");
   let currentMessageIndex = 0;
 
   function rotateFooterMessage() {
     currentMessageIndex = (currentMessageIndex + 1) % footerMessages.length;
-    footerElement.innerHTML = `<span aria-hidden="true">💧</span> ${footerMessages[currentMessageIndex]} <span aria-hidden="true">💧</span>`;
+    elements.footerElement.innerHTML = `<span aria-hidden="true">💧</span> ${footerMessages[currentMessageIndex]} <span aria-hidden="true">💧</span>`;
   }
 
   setInterval(rotateFooterMessage, 30 * 60 * 1000); // Rotate every 30 minutes
