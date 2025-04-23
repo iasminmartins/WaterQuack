@@ -1,6 +1,15 @@
 let goalAchievedOnce = false;
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
+  // Helper functions for chrome.storage.sync
+  function getStorage(keys) {
+    return new Promise((resolve) => chrome.storage.sync.get(keys, resolve));
+  }
+
+  function setStorage(data) {
+    return new Promise((resolve) => chrome.storage.sync.set(data, resolve));
+  }
+
   // Cache DOM elements in a centralized object
   const elements = {
     setIntervalButton: document.getElementById("setInterval"),
@@ -35,11 +44,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Initialize default interval if not set
-  chrome.storage.sync.get("interval", (data) => {
-    if (data.interval === undefined) {
-      chrome.storage.sync.set({ interval: 30 }); // Default to 30 minutes
-    }
-  });
+  const { interval } = await getStorage("interval");
+  if (interval === undefined) {
+    await setStorage({ interval: 30 }); // Default to 30 minutes
+  }
 
   // Validate and sanitize numeric input
   function validateNumberInput(value, min, max) {
@@ -51,130 +59,106 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Handle setting reminder interval
-  elements.setIntervalButton.addEventListener("click", () => {
+  elements.setIntervalButton.addEventListener("click", async () => {
     const interval = validateNumberInput(elements.intervalInput.value, 1, 1440);
     if (interval !== null) {
-      chrome.storage.sync.set({ interval }, () => {
-        elements.status.textContent = `Current interval: ${interval} minute(s).`; // Update hidden status element
-        chrome.runtime.sendMessage({ action: "updateReminder", interval });
-        alert("Reminder interval set successfully!"); // Notify user
-      });
+      await setStorage({ interval });
+      elements.status.textContent = `Current interval: ${interval} minute(s).`; // Update hidden status element
+      chrome.runtime.sendMessage({ action: "updateReminder", interval });
+      alert("Reminder interval set successfully!"); // Notify user
     } else {
       alert("The reminder interval must be a valid number between 1 and 1440 minutes.");
     }
   });
 
   // Handle setting daily goal
-  elements.setGoalButton.addEventListener("click", () => {
+  elements.setGoalButton.addEventListener("click", async () => {
     const goal = validateNumberInput(elements.goalInput.value, 1, 30);
     if (goal !== null) {
-      chrome.storage.sync.get(["dailyCups"], (data) => {
-        const dailyCups = data.dailyCups || 0;
+      const { dailyCups = 0 } = await getStorage("dailyCups");
 
-        chrome.storage.sync.set(
-          { dailyGoal: goal, goalAchievedOnce: false },
-          () => {
-            if (dailyCups >= goal) {
-              playQuackSound(); // Play the sound when the goal is achieved
-              chrome.runtime.sendMessage({
-                action: "goalAchieved",
-                message: `You've reached your goal of ${goal} cups. Congratu-ducking-lations! 💧`,
-              });
-              chrome.storage.sync.set({ goalAchievedOnce: true });
-            }
-            updateProgress();
-            alert("Daily goal set successfully!"); // Notify user
-          },
-        );
-      });
+      await setStorage({ dailyGoal: goal, goalAchievedOnce: false });
+      if (dailyCups >= goal) {
+        playQuackSound(); // Play the sound when the goal is achieved
+        chrome.runtime.sendMessage({
+          action: "goalAchieved",
+          message: `You've reached your goal of ${goal} cups. Congratu-ducking-lations! 💧`,
+        });
+        await setStorage({ goalAchievedOnce: true });
+      }
+      updateProgress();
+      alert("Daily goal set successfully!"); // Notify user
     } else {
       alert("The daily goal must be a valid number between 1 and 30 cups.");
     }
   });
 
   // Update progress display and notify when goal is reached
-  function updateProgress(dailyCups = null, dailyGoal = null, isCupAdded = false, isCupRemoved = false) {
-    chrome.storage.sync.get(["dailyGoal", "dailyCups"], (data) => {
-      const goal = dailyGoal || data.dailyGoal || 10;
-      const cups = dailyCups !== null ? dailyCups : data.dailyCups || 0;
+  async function updateProgress(dailyCups = null, dailyGoal = null, isCupAdded = false, isCupRemoved = false) {
+    const { dailyGoal: storedGoal = 10, dailyCups: storedCups = 0 } = await getStorage(["dailyGoal", "dailyCups"]);
+    const goal = dailyGoal || storedGoal;
+    const cups = dailyCups !== null ? dailyCups : storedCups;
 
-      // Update the title with the number of cups drunk
-      elements.cupsTodaySpan.textContent = cups;
+    // Update the title with the number of cups drunk
+    elements.cupsTodaySpan.textContent = cups;
 
-      // Update the hidden progress display
-      elements.progressDiv.textContent = `Current goal: ${goal} cup(s).`;
+    // Update the hidden progress display
+    elements.progressDiv.textContent = `Current goal: ${goal} cup(s).`;
 
-      // Update aria-valuenow and aria-valuemax for screen readers
-      elements.cupProgress.setAttribute("aria-valuenow", cups);
-      elements.cupProgress.setAttribute("aria-valuemax", goal);
+    // Update aria-valuenow and aria-valuemax for screen readers
+    elements.cupProgress.setAttribute("aria-valuenow", cups);
+    elements.cupProgress.setAttribute("aria-valuemax", goal);
 
-      renderProgress(cups, goal, isCupAdded, isCupRemoved);
+    renderProgress(cups, goal, isCupAdded, isCupRemoved);
 
-      // Announce progress update for screen readers
-      elements.cupsTodaySpan.setAttribute("aria-live", "polite");
-    });
+    // Announce progress update for screen readers
+    elements.cupsTodaySpan.setAttribute("aria-live", "polite");
   }
 
   // Function to play the "quack.mp3" sound
-  function playQuackSound() {
-    chrome.storage.sync.get("notificationsMuted", (data) => {
-      if (!data.notificationsMuted) {
-        const audio = new Audio("quack.mp3");
-        audio.play().catch((error) => {
-          console.error("Failed to play sound:", error);
-        });
-      }
-    });
+  async function playQuackSound() {
+    const { notificationsMuted } = await getStorage("notificationsMuted");
+    if (!notificationsMuted) {
+      const audio = new Audio("quack.mp3");
+      audio.play().catch((error) => {
+        console.error("Failed to play sound:", error);
+      });
+    }
   }
 
   // Add a cup to the tally
-  elements.addCupButton.addEventListener("click", () => {
-    chrome.storage.sync.get(
-      ["dailyCups", "dailyGoal", "goalAchievedOnce"],
-      (data) => {
-        const dailyCups = (data.dailyCups || 0) + 1;
-        const dailyGoal = data.dailyGoal || 10; // Default to 10 cups
-        let goalAchievedOnce = data.goalAchievedOnce || false;
+  elements.addCupButton.addEventListener("click", async () => {
+    const { dailyCups = 0, dailyGoal = 10, goalAchievedOnce = false } = await getStorage(["dailyCups", "dailyGoal", "goalAchievedOnce"]);
+    const newDailyCups = dailyCups + 1;
 
-        if (dailyCups > 30) {
-          alert(
-            "⚠️ Drinking too much water may not be healthy. Limit reached!",
-          );
-          return;
-        }
+    if (newDailyCups > 30) {
+      alert("⚠️ Drinking too much water may not be healthy. Limit reached!");
+      return;
+    }
 
-        // Ensure goalAchievedOnce is reset if the goal is not reached yet
-        if (dailyCups < dailyGoal) {
-          goalAchievedOnce = false;
-        }
+    let newGoalAchievedOnce = goalAchievedOnce;
+    if (newDailyCups < dailyGoal) {
+      newGoalAchievedOnce = false;
+    }
 
-        chrome.storage.sync.set({ dailyCups, goalAchievedOnce }, () => {
-          if (dailyCups >= dailyGoal && !goalAchievedOnce) {
-            playQuackSound(); // Play the sound when the goal is achieved
-            chrome.runtime.sendMessage({
-              action: "goalAchieved",
-              message: `You've reached your goal of ${dailyGoal} cups. Congratu-ducking-lations! 💧`,
-            });
-            chrome.storage.sync.set({ goalAchievedOnce: true }, () =>
-              updateProgress(dailyCups, dailyGoal, true),
-            );
-          } else {
-            updateProgress(dailyCups, dailyGoal, true);
-          }
-        });
-      },
-    );
+    await setStorage({ dailyCups: newDailyCups, goalAchievedOnce: newGoalAchievedOnce });
+    if (newDailyCups >= dailyGoal && !goalAchievedOnce) {
+      playQuackSound(); // Play the sound when the goal is achieved
+      chrome.runtime.sendMessage({
+        action: "goalAchieved",
+        message: `You've reached your goal of ${dailyGoal} cups. Congratu-ducking-lations! 💧`,
+      });
+      await setStorage({ goalAchievedOnce: true });
+    }
+    updateProgress(newDailyCups, dailyGoal, true);
   });
 
   // Remove a cup from the tally
-  elements.removeCupButton.addEventListener("click", () => {
-    chrome.storage.sync.get(["dailyCups"], (data) => {
-      const dailyCups = Math.max(0, (data.dailyCups || 0) - 1);
-      chrome.storage.sync.set(
-        { dailyCups, goalAchievedOnce: false },
-        () => updateProgress(dailyCups, null, false, true),
-      );
-    });
+  elements.removeCupButton.addEventListener("click", async () => {
+    const { dailyCups = 0 } = await getStorage("dailyCups");
+    const newDailyCups = Math.max(0, dailyCups - 1);
+    await setStorage({ dailyCups: newDailyCups, goalAchievedOnce: false });
+    updateProgress(newDailyCups, null, false, true);
   });
 
   // Render the cup progress bar
@@ -217,51 +201,45 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Mute/unmute notifications
-  elements.muteNotificationsCheckbox.addEventListener("change", (event) => {
-    const muted = event.target.checked;
-    chrome.storage.sync.set({ notificationsMuted: muted });
+  elements.muteNotificationsCheckbox.addEventListener("change", async (event) => {
+    await setStorage({ notificationsMuted: event.target.checked });
   });
 
   // Initialize mute notifications state
-  chrome.storage.sync.get("notificationsMuted", (data) => {
-    elements.muteNotificationsCheckbox.checked = !!data.notificationsMuted;
-  });
+  const { notificationsMuted } = await getStorage("notificationsMuted");
+  elements.muteNotificationsCheckbox.checked = !!notificationsMuted;
 
   // Disable/enable notifications
-  elements.disableNotificationsCheckbox.addEventListener("change", (event) => {
-    const disabled = event.target.checked;
-    chrome.storage.sync.set({ notificationsDisabled: disabled });
+  elements.disableNotificationsCheckbox.addEventListener("change", async (event) => {
+    await setStorage({ notificationsDisabled: event.target.checked });
   });
 
   // Initialize disable notifications state
-  chrome.storage.sync.get("notificationsDisabled", (data) => {
-    elements.disableNotificationsCheckbox.checked = !!data.notificationsDisabled;
-  });
+  const { notificationsDisabled } = await getStorage("notificationsDisabled");
+  elements.disableNotificationsCheckbox.checked = !!notificationsDisabled;
 
   // Show notification if not muted or disabled
-  function showNotification(title, message) {
-    chrome.storage.sync.get(["notificationsMuted", "notificationsDisabled"], (data) => {
-      if (!data.notificationsMuted && !data.notificationsDisabled) {
-        chrome.notifications.create({
-          type: "basic",
-          iconUrl: "icon48.png",
-          title,
-          message,
-          priority: 2,
-        });
-      }
-    });
+  async function showNotification(title, message) {
+    const { notificationsMuted, notificationsDisabled } = await getStorage(["notificationsMuted", "notificationsDisabled"]);
+    if (!notificationsMuted && !notificationsDisabled) {
+      chrome.notifications.create({
+        type: "basic",
+        iconUrl: "icon48.png",
+        title,
+        message,
+        priority: 2,
+      });
+    }
   }
 
   // Initialize placeholders for goal and interval inputs
-  chrome.storage.sync.get(["dailyGoal", "interval"], (data) => {
-    if (elements.goalInput) {
-      elements.goalInput.placeholder = `Current goal: ${data.dailyGoal || 10} cup(s)`;
-    }
-    if (elements.intervalInput) {
-      elements.intervalInput.placeholder = `Current interval: ${data.interval || 30} minute(s)`;
-    }
-  });
+  const { dailyGoal = 10, interval: storedInterval = 30 } = await getStorage(["dailyGoal", "interval"]);
+  if (elements.goalInput) {
+    elements.goalInput.placeholder = `Current goal: ${dailyGoal} cup(s)`;
+  }
+  if (elements.intervalInput) {
+    elements.intervalInput.placeholder = `Current interval: ${storedInterval} minute(s)`;
+  }
 
   // Initial progress update
   updateProgress();
@@ -323,17 +301,16 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Load saved mode from storage and update theme color
-  chrome.storage.sync.get("mode", (data) => {
-    if (data.mode === "dark") {
-      document.documentElement.classList.add("dark-mode");
-      updateThemeColor("#1e1e2f");
-    } else if (data.mode === "colorblind") {
-      document.documentElement.classList.add("colorblind-mode");
-      updateThemeColor("#0072B2");
-    } else {
-      updateThemeColor("#0066cc"); // Default to light mode theme color
-    }
-  });
+  const { mode } = await getStorage("mode");
+  if (mode === "dark") {
+    document.documentElement.classList.add("dark-mode");
+    updateThemeColor("#1e1e2f");
+  } else if (mode === "colorblind") {
+    document.documentElement.classList.add("colorblind-mode");
+    updateThemeColor("#0072B2");
+  } else {
+    updateThemeColor("#0066cc"); // Default to light mode theme color
+  }
 
   // Footer message rotation
   const footerMessages = [
