@@ -2,7 +2,7 @@
    Variables
 ---------------------------------------------- */
 
-/* Ligh Mode (default) */
+/* Light Mode (default) - Sunny Splash */
 :root {
   --color-primary: #0066cc;         
   --color-accent: #76f7fc;          
@@ -13,10 +13,11 @@
   --color-muted: #999999;           
   --color-shadow: rgba(0, 191, 255, 0.4); 
   --color-background: #ffffff; 
-  --color-text: #0066cc;            
+  --color-text: #0066cc;    
+  --color-input: #0066cc;        
 }
 
-/* Dark Mode */
+/* Dark Mode - Twilight Pond */
 :root.dark-mode {
   --color-primary: #000;
   --color-accent: #3a3a5c;
@@ -28,20 +29,22 @@
   --color-shadow: rgba(58, 58, 92, 0.4);
   --color-background: #fff;
   --color-text: #ffffff;
+  --color-input: #000; /* Input color for dark mode */
 }
 
-/* Refined Colorblind Mode */
+/* Colorblind Mode - Friendly Quack */
 :root.colorblind-mode {
-  --color-primary: #fff;       /* deep blue */
-  --color-accent: #05c86a;            /* green-teal */
-  --color-accent-light: #f9eb33;      /* bright yellow */
-  --color-warning: #0e6dea;          /* orange */
-  --color-warning-dark: #040e9c;     /* orange-red */
+  --color-primary: #fff;       
+  --color-accent: #05c86a;            
+  --color-accent-light: #f9eb33;      
+  --color-warning: #0e6dea;          
+  --color-warning-dark: #040e9c;     
   --color-surface: #000;
   --color-muted: #999999;
-  --color-shadow: rgba(0, 114, 178, 0.4); /* based on --dark-blue */
+  --color-shadow: rgba(0, 114, 178, 0.4);
   --color-background: #F7F7F7;
   --color-text: #040e9c;
+  --color-input: #040e9c;
 }
 
 /* ----------------------------------------------
@@ -60,7 +63,7 @@ body {
   color: var(--color-text);
 }
    
-h2 {
+h1 {
   font-size: 2.1em;
   font-weight: 900;
   letter-spacing: 1px;
@@ -68,7 +71,7 @@ h2 {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* subtle shadow for depth */
 }
 
-h3, label {
+h2, label {
   font-weight: 800;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -80,18 +83,18 @@ h3, label {
   border-bottom: 2.5px solid var(--color-primary);
 }
 
-h3 { 
+h2 { 
   font-size: 1.3em;
 }
 
 label {
   font-size: 1.1em;
   display: block;
-  margin: 15px 0 10px;
 }
 
 .toggle-container label {
-  font-size: 1em; 
+  font-size: 1em;
+  margin-top: 5px; 
 }
 
 /* ----------------------------------------------
@@ -105,7 +108,7 @@ input {
   border-radius: 20px; 
   font-size: 1em; 
   font-weight: bold;
-  color: var(--color-primary);
+  color: var(--color-input);
   box-sizing: border-box;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
@@ -163,8 +166,6 @@ header {
   width: 300px;
   overflow: hidden;
   position: relative;
-  background: var(--color-accent);
-  border: 3.5px solid var(--color-primary);
 }
 
 .settings-card {
@@ -173,13 +174,12 @@ header {
   border-radius: 10px;
   margin-bottom: 15px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  background-color: var(--color-accent-light);
 }
 
 footer {
   font-size: 0.9em;
   font-weight: bold;
-  margin: 30px 0 5px;
+  margin: 20px 0 5px;
 }
 
 footer p {
@@ -199,26 +199,19 @@ footer p {
 .mode-section {
   display: flex;
   flex-direction: column; /* Stack elements vertically */
-  gap: 10px;
-  margin-bottom: 15px;
+  gap: 15px;
+  margin: 10px 0 10px;
 }
 
 .notification-section,
 .mode-section {
   align-items: flex-start;
-  margin-left: 10px;
+  margin: 10px 10px 10px;
 }
 
-.notification-section label,
-.mode-section label {
-  text-align: left;
-}
-
-.notification-section .toggle-container {
-  display: flex;
-  align-items: center; 
+.notification-section .toggle-container { 
   justify-content: flex-start;
-  gap: 10px;
+  gap: 15px;
   width: 100%;
 }
 
@@ -460,36 +453,20 @@ input:checked + .slider .off-text {
   z-index: 10;
 }
 
-/* Tooltip Arrow */
-.tooltip-icon:hover::before,
-.tooltip-icon:focus::before {
-  content: "";
-  position: absolute;
-  bottom: 115%;
-  left: 50%;
-  transform: translateX(-50%);
-  border: 6px solid transparent;
-  border-top-color: var(--color-warning);
-  z-index: 10;
-}
-
 /* ----------------------------------------------
    Accessibility
 ---------------------------------------------- */
 
-/* Reusable focus outline utility */
-.focus-outline {
+/* Apply focus-outline */
+input:focus,
+.tooltip-icon:focus,
+.toggle-switch input:focus + .slider {
   outline: 3px solid var(--color-warning);
   outline-offset: 2px;
 }
 
-/* Apply .focus-outline where needed */
-button:focus,
-input:focus,
-.tooltip-icon:focus,
-.toggle-switch input:focus + .slider,
-.focused {
-  outline: 3px solid var(--color-warning);
+button:focus {
+  outline: 3px solid var(--color-primary);
   outline-offset: 2px;
 }
 
@@ -518,11 +495,7 @@ input:focus,
   justify-content: space-between;
   flex-wrap: nowrap; /* Ensure buttons stay on the same line */
   gap: 10px;
-  font-size: 1em;
-}
-
-#colorblindMode {
-  margin-right: 10px; /* Add margin-right to "Friendly Quack" button */
+  font-size: 0.9em;
 }
 
 /* ----------------------------------------------

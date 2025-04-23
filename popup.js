@@ -119,29 +119,41 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Function to check if the goal is achieved
   async function checkGoalAchieved(dailyCups, dailyGoal, goalAchievedOnce) {
     if (dailyCups >= dailyGoal && !goalAchievedOnce) {
-      playQuackSound(); // Play the sound when the goal is achieved
+      const { notificationsMuted, notificationsDisabled } = await getStorage([
+        "notificationsMuted",
+        "notificationsDisabled",
+      ]);
+
+      // Play quack sound only if notifications are not muted or disabled
+      if (!notificationsMuted && !notificationsDisabled) {
+        playQuackSound();
+      }
+
+      // Show confetti only if notifications are muted but not disabled
+      if (!notificationsDisabled) {
+        const confettiContainer = document.createElement("div");
+        confettiContainer.classList.add("confetti-animation");
+        const emojis = ["✨", "💦", "💧", "🎉"];
+        for (let i = 0; i < 50; i++) {
+          const span = document.createElement("span");
+          span.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+          span.style.left = `${Math.random() * 100}%`; // Random horizontal position
+          span.style.animationDelay = `${Math.random() * 2}s`; // Random delay
+          confettiContainer.appendChild(span);
+        }
+        document.body.appendChild(confettiContainer);
+
+        // Remove the animation after it completes
+        setTimeout(() => {
+          confettiContainer.remove();
+        }, 3000);
+      }
+
+      // Send notification message
       chrome.runtime.sendMessage({
         action: "goalAchieved",
         message: `You've reached your goal of ${dailyGoal} cups. Congratu-ducking-lations! 💧`,
       });
-
-      // Add falling confetti animation
-      const confettiContainer = document.createElement("div");
-      confettiContainer.classList.add("confetti-animation");
-      const emojis = ["✨", "💦", "💧", "🎉"];
-      for (let i = 0; i < 50; i++) { // Create 50 falling emojis
-        const span = document.createElement("span");
-        span.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-        span.style.left = `${Math.random() * 100}%`; // Random horizontal position
-        span.style.animationDelay = `${Math.random() * 2}s`; // Random delay
-        confettiContainer.appendChild(span);
-      }
-      document.body.appendChild(confettiContainer);
-
-      // Remove the animation after it completes
-      setTimeout(() => {
-        confettiContainer.remove();
-      }, 3000);
 
       await updateStorage({ goalAchievedOnce: true });
       return true;
@@ -344,7 +356,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     elements.footerElement.innerHTML = `<span aria-hidden="true">💧</span> ${footerMessages[currentMessageIndex]} <span aria-hidden="true">💧</span>`;
   }
 
-  setInterval(rotateFooterMessage, 30 * 60 * 1000); // Rotate every 30 minutes
+  // Call the function immediately to set the first message
+  rotateFooterMessage();
+
+  // Set interval to rotate messages every 30 minutes
+  setInterval(rotateFooterMessage, 30 * 60 * 1000);
 
   // Initial progress update
   updateProgress();
