@@ -14,6 +14,7 @@
   --color-shadow: rgba(0, 191, 255, 0.4); 
   --color-background: #ffffff; 
   --color-text: #0066cc;    
+  --color-h1: #0066cc;
   --color-input: #0066cc;        
 }
 
@@ -28,7 +29,8 @@
   --color-muted: #7f8c8d;
   --color-shadow: rgba(58, 58, 92, 0.4);
   --color-background: #fff;
-  --color-text: #ffffff;
+  --color-text: #fff;
+  --color-h1: #fff;
   --color-input: #000; /* Input color for dark mode */
 }
 
@@ -39,12 +41,13 @@
   --color-accent-light: #f9eb33;      
   --color-warning: #0e6dea;          
   --color-warning-dark: #040e9c;     
-  --color-surface: #000;
+  --color-surface: #069d54;
   --color-muted: #999999;
   --color-shadow: rgba(0, 114, 178, 0.4);
   --color-background: #F7F7F7;
-  --color-text: #040e9c;
-  --color-input: #040e9c;
+  --color-text: #0e6dea;
+  --color-h1: #fff;
+  --color-input: #0e6dea;
 }
 
 /* ----------------------------------------------
@@ -68,6 +71,7 @@ h1 {
   font-weight: 900;
   letter-spacing: 1px;
   margin: 0; 
+  color: var(--color-h1);
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* subtle shadow for depth */
 }
 
@@ -78,6 +82,7 @@ h2, label {
 
 .heading--settings {
   font-size: 1.5em;
+  color: var(--color-h1);
   margin: 10px 0 20px;
   padding-bottom: 10px; 
   border-bottom: 2.5px solid var(--color-primary);
@@ -180,6 +185,7 @@ footer {
   font-size: 0.9em;
   font-weight: bold;
   margin: 20px 0 5px;
+  color: var(--color-h1);
 }
 
 footer p {
@@ -351,7 +357,6 @@ button:active {
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.4s;
-  background-color: var(--color-primary);
 }
 
 /* Toggle Knob */
@@ -370,6 +375,7 @@ button:active {
 /* Toggle ON */
 input:checked + .slider {
   background-color: var(--color-warning);
+  color: var(--color-background);
 }
 
 input:checked + .slider::before {
@@ -466,7 +472,7 @@ input:focus,
 }
 
 button:focus {
-  outline: 3px solid var(--color-primary);
+  outline: 3px solid var(--color-h1);
   outline-offset: 2px;
 }
 
