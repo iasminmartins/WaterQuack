@@ -58,6 +58,20 @@ document.addEventListener("DOMContentLoaded", async () => {
     return number;
   }
 
+  // Function to check if the goal is achieved
+  async function checkGoalAchieved(dailyCups, dailyGoal, goalAchievedOnce) {
+    if (dailyCups >= dailyGoal && !goalAchievedOnce) {
+      playQuackSound(); // Play the sound when the goal is achieved
+      chrome.runtime.sendMessage({
+        action: "goalAchieved",
+        message: `You've reached your goal of ${dailyGoal} cups. Congratu-ducking-lations! 💧`,
+      });
+      await setStorage({ goalAchievedOnce: true });
+      return true;
+    }
+    return false;
+  }
+
   // Handle setting reminder interval
   elements.setIntervalButton.addEventListener("click", async () => {
     const interval = validateNumberInput(elements.intervalInput.value, 1, 1440);
@@ -78,14 +92,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const { dailyCups = 0 } = await getStorage("dailyCups");
 
       await setStorage({ dailyGoal: goal, goalAchievedOnce: false });
-      if (dailyCups >= goal) {
-        playQuackSound(); // Play the sound when the goal is achieved
-        chrome.runtime.sendMessage({
-          action: "goalAchieved",
-          message: `You've reached your goal of ${goal} cups. Congratu-ducking-lations! 💧`,
-        });
-        await setStorage({ goalAchievedOnce: true });
-      }
+      await checkGoalAchieved(dailyCups, goal, false); // Reuse the function here
       updateProgress();
       alert("Daily goal set successfully!"); // Notify user
     } else {
@@ -142,14 +149,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     await setStorage({ dailyCups: newDailyCups, goalAchievedOnce: newGoalAchievedOnce });
-    if (newDailyCups >= dailyGoal && !goalAchievedOnce) {
-      playQuackSound(); // Play the sound when the goal is achieved
-      chrome.runtime.sendMessage({
-        action: "goalAchieved",
-        message: `You've reached your goal of ${dailyGoal} cups. Congratu-ducking-lations! 💧`,
-      });
-      await setStorage({ goalAchievedOnce: true });
-    }
+    await checkGoalAchieved(newDailyCups, dailyGoal, goalAchievedOnce); // Reuse the function here
     updateProgress(newDailyCups, dailyGoal, true);
   });
 
