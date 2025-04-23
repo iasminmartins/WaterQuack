@@ -18,30 +18,30 @@
 
 /* Dark Mode */
 :root.dark-mode {
-  --color-primary: #1e1e2f;
+  --color-primary: #000;
   --color-accent: #3a3a5c;
   --color-accent-light: #4f4f7a;
   --color-warning: #f1c40f;
-  --color-warning-dark: #d4ac0d;
-  --color-surface: #e0e0e0;
+  --color-warning-dark: #be9a0c;
+  --color-surface: #fff;
   --color-muted: #7f8c8d;
   --color-shadow: rgba(58, 58, 92, 0.4);
-  --color-background: #121212;
+  --color-background: #fff;
   --color-text: #ffffff;
 }
 
 /* Refined Colorblind Mode */
 :root.colorblind-mode {
-  --color-primary: #0072B2;       /* deep blue */
-  --color-accent: #009E73;            /* green-teal */
-  --color-accent-light: #F0E442;      /* bright yellow */
-  --color-warning: #E69F00;          /* orange */
-  --color-warning-dark: #D55E00;     /* orange-red */
-  --color-surface: #ffffff;
+  --color-primary: #fff;       /* deep blue */
+  --color-accent: #05c86a;            /* green-teal */
+  --color-accent-light: #f9eb33;      /* bright yellow */
+  --color-warning: #0e6dea;          /* orange */
+  --color-warning-dark: #040e9c;     /* orange-red */
+  --color-surface: #000;
   --color-muted: #999999;
   --color-shadow: rgba(0, 114, 178, 0.4); /* based on --dark-blue */
   --color-background: #F7F7F7;
-  --color-text: #000000;
+  --color-text: #040e9c;
 }
 
 /* ----------------------------------------------
