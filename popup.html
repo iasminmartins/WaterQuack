@@ -26,6 +26,21 @@
         <section class="cups-section" aria-labelledby="cups-today-label">
           <h2 id="cups-today-label">Cups Drunk Today: <span id="cupsToday" aria-live="polite">0</span></h2>
           <div id="cupProgress" class="cup-progress" role="list" aria-valuenow="0" aria-valuemax="10"></div>
+          <div class="progress-container">
+            <div 
+              class="progress-bar" 
+              id="progressBar" 
+              role="progressbar" 
+              aria-valuemin="0" 
+              aria-valuemax="100" 
+              aria-valuenow="0" 
+              aria-label="Water intake progress" 
+              aria-describedby="progressDescription">
+              <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <span id="progressPercentage">0%</span>
+            <span id="progressDescription" class="sr-only">Track your daily water intake progress.</span>
+          </div>
         </section>
       </article>
       <div class="cup-controls" role="group" aria-label="Cup controls"> 

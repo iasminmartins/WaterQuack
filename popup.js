@@ -228,6 +228,23 @@ document.addEventListener("DOMContentLoaded", async () => {
     elements.cupProgress.setAttribute("aria-valuenow", cups);
     elements.cupProgress.setAttribute("aria-valuemax", goal);
 
+    // Update the progress bar and percentage
+    const progressPercentage = Math.min(Math.round((cups / goal) * 100), 100);
+    const progressFill = document.getElementById("progressFill");
+    const progressBar = document.getElementById("progressBar");
+    const progressPercentageElement = document.getElementById("progressPercentage");
+
+    if (progressFill) {
+      progressFill.style.width = `${progressPercentage}%`;
+    }
+    if (progressPercentageElement) {
+      progressPercentageElement.textContent = `${progressPercentage}%`;
+    }
+    if (progressBar) {
+      progressBar.setAttribute("aria-valuenow", progressPercentage); // Update aria-valuenow dynamically
+    }
+
+    // Render the cups
     renderProgress(cups, goal, isCupAdded, isCupRemoved);
 
     // Announce progress update for screen readers
