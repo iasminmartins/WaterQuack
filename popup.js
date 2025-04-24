@@ -337,47 +337,31 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 
-  // Function to update the theme-color meta tag
-  function updateThemeColor(color) {
-    let themeColorMeta = document.querySelector('meta[name="theme-color"]');
-    if (!themeColorMeta) {
-      themeColorMeta = document.createElement('meta');
-      themeColorMeta.name = "theme-color";
-      document.head.appendChild(themeColorMeta);
-    }
-    themeColorMeta.content = color;
-  }
-
   // Mode toggle buttons
   elements.lightModeButton.addEventListener("click", () => {
     document.documentElement.classList.remove("dark-mode", "colorblind-mode");
     chrome.storage.sync.set({ mode: "light" });
-    updateThemeColor("#0066cc"); // Light mode theme color
   });
 
   elements.darkModeButton.addEventListener("click", () => {
     document.documentElement.classList.add("dark-mode");
     document.documentElement.classList.remove("colorblind-mode");
     chrome.storage.sync.set({ mode: "dark" });
-    updateThemeColor("#1e1e2f"); // Dark mode theme color
   });
 
   elements.colorblindModeButton.addEventListener("click", () => {
     document.documentElement.classList.add("colorblind-mode");
     document.documentElement.classList.remove("dark-mode");
     chrome.storage.sync.set({ mode: "colorblind" });
-    updateThemeColor("#0072B2"); // Colorblind mode theme color
   });
 
-  // Load saved mode from storage and update theme color
+  // Load saved mode from storage
   if (state.mode === "dark") {
     document.documentElement.classList.add("dark-mode");
-    updateThemeColor("#1e1e2f");
   } else if (state.mode === "colorblind") {
     document.documentElement.classList.add("colorblind-mode");
-    updateThemeColor("#0072B2");
   } else {
-    updateThemeColor("#0066cc"); // Default to light mode theme color
+    document.documentElement.classList.remove("dark-mode", "colorblind-mode"); // Default to light mode
   }
 
   // Footer message rotation
