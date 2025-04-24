@@ -91,6 +91,28 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 
+  // Helper function to show visual alerts with a checkmark
+  function showVisualAlert(button) {
+    const container = button.closest(".button-container");
+    if (!container) return;
+
+    const checkmark = document.createElement("div");
+    checkmark.classList.add("checkmark");
+
+    // Remove any existing checkmark
+    const existingCheckmark = container.querySelector(".checkmark");
+    if (existingCheckmark) {
+      existingCheckmark.remove();
+    }
+
+    container.appendChild(checkmark);
+
+    // Automatically remove the checkmark after 1.5 seconds
+    setTimeout(() => {
+      checkmark.remove();
+    }, 1500);
+  }
+
   // Consolidated function to handle cup count increment and goal checking
   async function incrementCupCount(isAdding) {
     const newDailyCups = isAdding
@@ -169,7 +191,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         await updateStorage({ interval });
         elements.status.textContent = `Current interval: ${interval} minute(s).`; // Update hidden status element
         chrome.runtime.sendMessage({ action: "updateReminder", interval });
-        alert("Reminder interval set successfully!"); // Notify user
+        showVisualAlert(elements.setIntervalButton); // Show checkmark
       } else {
         alert(`The reminder interval must be a valid number between ${config.minInterval} and ${config.maxInterval} minutes.`);
       }
@@ -184,7 +206,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         await updateStorage({ dailyGoal: goal, goalAchievedOnce: false });
         await checkGoalAchieved(state.dailyCups, goal, false); // Reuse the function here
         updateProgress();
-        alert("Daily goal set successfully!"); // Notify user
+        showVisualAlert(elements.setGoalButton); // Show checkmark
       } else {
         alert(`The daily goal must be a valid number between ${config.minCups} and ${config.maxCups} cups.`);
       }
@@ -359,8 +381,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Call the function immediately to set the first message
   rotateFooterMessage();
 
-  // Set interval to rotate messages every 30 minutes
-  setInterval(rotateFooterMessage, 30 * 60 * 1000);
+  // Set interval to rotate messages every 5 seconds
+  setInterval(rotateFooterMessage, 5000);
 
   // Initial progress update
   updateProgress();

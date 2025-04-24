@@ -535,3 +535,46 @@ button:focus {
     opacity: 0;
   }
 }
+
+/* ----------------------------------------------
+   Checkmark Style
+---------------------------------------------- */
+.button-container {
+  position: relative;
+  display: inline-block;
+}
+
+.checkmark {
+  width: 7px;
+  height: 15px;
+  position: absolute;
+  top: 70%;
+  right: 55px; /* Position to the right of the button */
+  transform: translateY(-50%) rotate(45deg) scale(0.8);
+  border: solid var(--color-text);
+  border-width: 0 2px 2px 0;
+  opacity: 0;
+  animation: fadeInOut 2s ease-in-out forwards;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateY(-50%) rotate(45deg) scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-50%) rotate(45deg) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-50%) rotate(45deg) scale(0.8);
+  }
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
