@@ -120,7 +120,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       : Math.max(config.minCups - 1, state.dailyCups - 1);
 
     if (newDailyCups > config.maxCups) {
-      alert(`⚠️ Drinking too much water may not be healthy. Limit of ${config.maxCups} cups reached!`);
+      alert(`\n⚠️ Easy there, duckling! ⚠️\n\nDrinking too much water may not be healthy!\n\nLimit of ${config.maxCups} cups reached.\n`);
       return;
     }
 
@@ -193,7 +193,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         chrome.runtime.sendMessage({ action: "updateReminder", interval });
         showVisualAlert(elements.setIntervalButton); // Show checkmark
       } else {
-        alert(`The reminder interval must be a valid number between ${config.minInterval} and ${config.maxInterval} minutes.`);
+        alert(`\n⚠️ Whoopsie, made a oopsie. ⚠️\n\nThe reminder interval must be a valid number between ${config.minInterval} and ${config.maxInterval} minutes.\n`);
       }
     });
   });
@@ -208,7 +208,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         updateProgress();
         showVisualAlert(elements.setGoalButton); // Show checkmark
       } else {
-        alert(`The daily goal must be a valid number between ${config.minCups} and ${config.maxCups} cups.`);
+        alert(`\n⚠️ Oops, the duck did it again! ⚠️\n\nThe daily goal must be a valid number between ${config.minCups} and ${config.maxCups} cups.\n`);
       }
     });
   });
