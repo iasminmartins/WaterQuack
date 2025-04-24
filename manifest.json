@@ -1,27 +1,38 @@
 {
-    "manifest_version": 3,
-    "name": "WaterQuack",
-    "version": "1.0",
-    "description": "A friendly duck that quacks to remind you to drink water!",
-    "permissions": ["notifications", "alarms", "storage"],
-    "background": {
-      "service_worker": "background.js"
-    },
-    "action": {
-      "default_icon": {
-        "16": "icon16.png",
-        "48": "icon48.png",
-        "128": "icon128.png"
-      },
-      "default_popup": "popup.html"
-    },
-    "content_security_policy": {
-      "extension_pages": "script-src 'self'; object-src 'self';"
-    },
-    "web_accessible_resources": [
-      {
-        "resources": ["quack.mp3"],
-        "matches": ["<all_urls>"]
-      }
-    ]
+  "manifest_version": 3,
+  "name": "WaterQuack",
+  "version": "1.0.0",
+  "description": "A friendly duck that sends reminders to drink water!",
+  "author": "Iasmin Martins Cintra",
+  "homepage_url": "https://github.com/iasminmartins/WaterQuack",
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "permissions": [
+    "storage",
+    "alarms",
+    "notifications"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["quack.mp3"],
+      "matches": ["<all_urls>"]
+    }
+  ]
 }
