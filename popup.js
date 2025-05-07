@@ -113,6 +113,21 @@ document.addEventListener("DOMContentLoaded", async () => {
     }, 1500);
   }
 
+  // Helper function to validate input, update state, and show alerts
+  async function validateInputAndUpdate(inputElement, min, max, stateKey, updateCallback, alertMessage) {
+    const value = parseInt(inputElement.value, 10);
+    if (isNaN(value) || value < min || value > max) {
+      alert(alertMessage);
+      return false;
+    }
+    const updates = { [stateKey]: value };
+    await updateStorage(updates);
+    if (updateCallback) {
+      await updateCallback(value);
+    }
+    return true;
+  }
+
   // Consolidated function to handle cup count increment and goal checking
   async function incrementCupCount(isAdding) {
     const newDailyCups = isAdding
@@ -186,30 +201,36 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Handle setting reminder interval
   elements.setIntervalButton.addEventListener("click", () => {
     withButtonDisabled(elements.setIntervalButton, async () => {
-      const interval = validateNumberInput(elements.intervalInput.value, config.minInterval, config.maxInterval);
-      if (interval !== null) {
-        await updateStorage({ interval });
-        elements.status.textContent = `Current interval: ${interval} minute(s).`; // Update hidden status element
-        chrome.runtime.sendMessage({ action: "updateReminder", interval });
-        showVisualAlert(elements.setIntervalButton); // Show checkmark
-      } else {
-        alert(`\n⚠️ Whoopsie, made a oopsie. ⚠️\n\nThe reminder interval must be a valid number between ${config.minInterval} and ${config.maxInterval} minutes.\n`);
-      }
+      await validateInputAndUpdate(
+        elements.intervalInput,
+        config.minInterval,
+        config.maxInterval,
+        "interval",
+        (interval) => {
+          elements.status.textContent = `Current interval: ${interval} minute(s).`;
+          chrome.runtime.sendMessage({ action: "updateReminder", interval });
+          showVisualAlert(elements.setIntervalButton);
+        },
+        `\n⚠️ Whoopsie, made a oopsie. ⚠️\n\nThe reminder interval must be a valid number between ${config.minInterval} and ${config.maxInterval} minutes.\n`
+      );
     });
   });
 
   // Handle setting daily goal
   elements.setGoalButton.addEventListener("click", () => {
     withButtonDisabled(elements.setGoalButton, async () => {
-      const goal = validateNumberInput(elements.goalInput.value, config.minCups, config.maxCups);
-      if (goal !== null) {
-        await updateStorage({ dailyGoal: goal, goalAchievedOnce: false });
-        await checkGoalAchieved(state.dailyCups, goal, false); // Reuse the function here
-        updateProgress();
-        showVisualAlert(elements.setGoalButton); // Show checkmark
-      } else {
-        alert(`\n⚠️ Oops, the duck did it again! ⚠️\n\nThe daily goal must be a valid number between ${config.minCups} and ${config.maxCups} cups.\n`);
-      }
+      await validateInputAndUpdate(
+        elements.goalInput,
+        config.minCups,
+        config.maxCups,
+        "dailyGoal",
+        async (goal) => {
+          await checkGoalAchieved(state.dailyCups, goal, false);
+          updateProgress();
+          showVisualAlert(elements.setGoalButton);
+        },
+        `\n⚠️ Oops, the duck did it again! ⚠️\n\nThe daily goal must be a valid number between ${config.minCups} and ${config.maxCups} cups.\n`
+      );
     });
   });
 
