@@ -153,6 +153,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     updateProgress(newDailyCups, state.dailyGoal, isAdding, !isAdding);
   }
 
+  // Check for reduced motion preference
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // Function to check if animations should run
+  function shouldAnimate() {
+    return !prefersReducedMotion;
+  }
+
   // Function to check if the goal is achieved
   async function checkGoalAchieved(dailyCups, dailyGoal, goalAchievedOnce) {
     if (dailyCups >= dailyGoal && !goalAchievedOnce) {
@@ -166,8 +174,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         playQuackSound();
       }
 
-      // Show confetti only if notifications are muted but not disabled
-      if (!notificationsDisabled) {
+      // Show confetti only if notifications are muted but not disabled and animations are allowed
+      if (!notificationsDisabled && shouldAnimate()) {
         const confettiContainer = document.createElement("div");
         confettiContainer.classList.add("confetti-animation");
         const emojis = ["✨", "💦", "💧", "🎉"];
@@ -306,13 +314,13 @@ document.addEventListener("DOMContentLoaded", async () => {
       cup.classList.add("cup");
       if (i < dailyCups) {
         cup.classList.add("full"); // Use full cup image
-        if (isCupAdded && i === dailyCups - 1) {
+        if (isCupAdded && i === dailyCups - 1 && shouldAnimate()) {
           cup.classList.add("added"); // Apply fade animation to the newly added cup
           setTimeout(() => cup.classList.remove("added"), 500); // Remove animation class after it completes
         }
       } else {
         cup.classList.add("empty"); // Use empty cup image
-        if (isCupRemoved && i === dailyCups) {
+        if (isCupRemoved && i === dailyCups && shouldAnimate()) {
           cup.classList.add("removed"); // Apply fade animation to the removed cup
           setTimeout(() => cup.classList.remove("removed"), 500); // Remove animation class after it completes
         }
